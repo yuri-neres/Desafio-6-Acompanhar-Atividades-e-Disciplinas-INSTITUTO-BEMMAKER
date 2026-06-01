@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Instituto Bemmaker{% endblock %}</title>
+    
+</head>
+<body>
+    <nav>
+        <a href="#">Início</a> |
+        <a href="#">Alunos</a> |
+        <a href="#">Professores e Orientadores</a> |
+        <a href="#">Coordenação</a> |
+       
+        
+    </nav>
+
+    <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        Conteúdo da página
+        {% endblock %}
+    </div>
+</body>
+</html>
