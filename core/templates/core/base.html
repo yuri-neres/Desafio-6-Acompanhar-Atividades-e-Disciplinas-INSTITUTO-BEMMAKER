@@ -4,24 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <header class="header-logo"></header>
+    
     <title>{% block title %}Instituto Bemmaker{% endblock %}</title>
     
     <!-- Link para o arquivo CSS externo -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    
 
 </head>
 <body>
-    <nav>
-        <a href="#">Início</a> |
-        <a href="#">Alunos</a> |
-        <a href="#">Professores e Orientadores</a> |
-        <a href="#">Atividades Acadêmicas</a> |
-       
+
+    <nav class="sidebar">
+        <a href="#">Início</a> 
+        <a href="#">Minhas Disciplinas</a> 
+        <a href="#">Atividades Acadêmicas</a>     
         
     </nav>
 
-    <div>
+    <main class="content">
         {% if messages %}
             {% for message in messages %}
                 <div>
@@ -33,6 +33,6 @@
         {% block content %}
         Conteúdo da página
         {% endblock %}
-    </div>
+    </main>
 </body>
 </html>

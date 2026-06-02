@@ -1,20 +1,6 @@
-.header-logo {
-    background: #ffffff;
-    text-align: center;
-    padding: 20px 10px;
-    border-bottom: 1px solid #e5e7eb;
-}
-
-.header-logo h1 {
-    margin: 0;
-    font-size: 22px;
-    color: #1E3A8A;
-    font-weight: bold;
-}
-
 :root {
-    --primary: #1E3A8A;
-    --secondary: #F4C542;
+    --primary:#1E3A8A;
+    --secondary: #304a91;
     --background: #f5f7fb;
     --text: #111827;
     --white: #ffffff;
@@ -28,6 +14,7 @@
 }
 
 body {
+    display: flex;
     font-family: Arial, sans-serif;
     background: var(--background);
     color: var(--text);
@@ -35,82 +22,45 @@ body {
 }
 
 /* NAVBAR */
-nav {
-    background: var(--primary);
-    padding: 15px 30px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap; /* RESPONSIVO */
+
+.sidebar{
+    width: 250px;
+    height: 100vh;
+    background-color: #1f3c88;
+    padding-top: 20px;
 }
 
-nav a {
-    color: var(--white);
+.sidebar h2{
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.sidebar a{
+    display: block;
+    color: white;
     text-decoration: none;
-    font-weight: bold;
-    padding: 8px 12px;
-    border-radius: 6px;
+    padding: 15px 20px;
     transition: 0.3s;
 }
 
-nav a:hover {
-    background: var(--secondary);
-    color: var(--primary);
+.sidebar a:hover{
+    background-color: #3056b3;
 }
 
+
 /* CONTAINER PRINCIPAL */
-div {
-    max-width: 1100px;
-    margin: 40px auto;
-    background: var(--white);
-    padding: 25px;
+.content {
+    flex: 1;
+    padding: 20px;
+    background: white;
+    margin: 20px;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* MENSAGENS */
-div > div {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 6px;
-    background: #e0f2fe;
-    color: #075985;
-    font-weight: bold;
-}
 
-/* 📱 RESPONSIVO (CELULAR) */
-@media (max-width: 768px) {
 
-    nav {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 
-    nav a {
-        width: 100%;
-    }
 
-    div {
-        margin: 20px 10px;
-        padding: 15px;
-    }
-}
-
-/* 📱 TELAS MUITO PEQUENAS */
-@media (max-width: 480px) {
-
-    nav {
-        padding: 10px;
-    }
-
-    nav a {
-        font-size: 14px;
-        padding: 10px;
-    }
-
-    body {
-        font-size: 14px;
-    }
-}
    
