@@ -14,6 +14,13 @@
 </head>
 <body>
 
+    <header class="header">
+        <div><img src="{% static 'img/logo-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></div>
+        <div class="user-info">Usuário</div>
+    </header>
+
+    <div class="container">
+
     <nav class="sidebar">
         <a href="#">Início</a> 
         <a href="#">Minhas Disciplinas</a> 
@@ -22,6 +29,7 @@
     </nav>
 
     <main class="content">
+
         {% if messages %}
             {% for message in messages %}
                 <div>
@@ -34,5 +42,7 @@
         Conteúdo da página
         {% endblock %}
     </main>
+
+</div>
 </body>
 </html>
