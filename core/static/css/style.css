@@ -23,6 +23,29 @@
     padding: 0 20px;
 }
 
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-icons{
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.header-icons a {
+    color: #555;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.header-icons a:hover {
+    color: #1e3a8a;
+}
+
 /* LOGO */
 .logo {
     height: 60px;   /* ajusta tamanho */
@@ -35,9 +58,19 @@
 }
 
 /* USUÁRIO */
-.user-info {
+.usuario {
     font-size: 14px;
     color: #333;
+    align-items: center;
+    gap: 10px;
+    display: flex;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #ccc;
 }
 
 body {
@@ -53,7 +86,7 @@ body {
 .sidebar{
     width: 220px;
     min-height: calc(100vh - 70px);
-    background-color: #1f3c88;
+    background-color: #1e3a8a;
     padding-top: 20px;
 }
 

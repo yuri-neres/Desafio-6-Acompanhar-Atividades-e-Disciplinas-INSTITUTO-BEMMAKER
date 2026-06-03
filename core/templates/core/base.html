@@ -9,22 +9,35 @@
     
     <!-- Link para o arquivo CSS externo -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-    
+    <!-- Link para Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 </head>
 <body>
 
     <header class="header">
         <div><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></div>
-        <div class="user-info">Usuário</div>
+    <div class="header-right">
+        <div class="header-icons">
+            <a href="#"><i class="fa-regular fa-envelope"></i></a>
+            <a href="#"><i class="fa-regular fa-bell"></i></a>
+        </div>
+        <div class="usuario">
+            <div class="avatar"></div>
+            <span>Usuário</span>
+        </div>
+    </div>
     </header>
 
     <div class="container">
 
     <nav class="sidebar">
-        <a href="#">Início</a> 
+        <a href="#">Home</a>
+        <a href="#">Meu Perfil</a> 
         <a href="#">Minhas Disciplinas</a> 
-        <a href="#">Atividades Acadêmicas</a>     
+        <a href="#">Atividades Acadêmicas</a> 
+        <a href="#">Coordenação</a> 
+        <a href="#">Sair</a>    
         
     </nav>
 
