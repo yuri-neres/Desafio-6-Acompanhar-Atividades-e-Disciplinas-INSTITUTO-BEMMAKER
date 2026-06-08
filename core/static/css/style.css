@@ -85,31 +85,21 @@ body {
 
 /* MENU */
 
-.sidebar{
-    width: 220px;
-    min-height: calc(100vh - 70px);
+.menu{
     background-color: #1e3a8a;
-    padding-top: 20px;
-    overflow: hidden;
+    display: flex;
+    gap: 20px;
+    padding: 12px 20px;
 }
 
-
-.sidebar h2{
-    color: white;
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-.sidebar a{
-    display: block;
+.menu a{
     color: white;
     text-decoration: none;
-    padding: 15px 20px;
-    transition: 0.3s;
+    font-weight: 500;
 }
 
-.sidebar a:hover{
-    background-color: #3056b3;
+.menu a:hover{
+    text-decoration: underline;
 }
 
 /* CONTAINER PRINCIPAL */
