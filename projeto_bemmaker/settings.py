@@ -40,12 +40,14 @@ INSTALLED_APPS = [
     'core',
     'alunos',
     'professores',
+    'coordenadores',
 ]
 
 MY_APPS = [
     'core.apps.CoreConfig',
     'alunos.apps.AlunoConfig',
     'professores.apps.ProfessorConfig',
+    'coordenadores.apps.CoordenadorConfig',
 ]
 
 MIDDLEWARE = [
