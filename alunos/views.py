@@ -4,7 +4,7 @@ from .models import Aluno
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse("Olá, Django!")
+    return HttpResponse("Olá, Alunos!")
     a = Aluno.objects.get(id=1)
     contexto = {"alunos": a}
     return render(request, 'home.html', contexto)
