@@ -38,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'crispy_forms',
+    'alunos',
+]
+
+MY_APPS = [
+    'core.apps.CoreConfig',
+    'alunos.apps.AlunoConfig',
 ]
 
 MIDDLEWARE = [
