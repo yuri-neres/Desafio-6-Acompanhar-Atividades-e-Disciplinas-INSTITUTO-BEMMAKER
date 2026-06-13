@@ -1,3 +1,10 @@
 from django.shortcuts import render
+from datetime import date
+from .models import Professor
+from django.http import HttpResponse
 
-# Create your views here.
+def home(request):
+    return HttpResponse("Olá, Django!")
+    p = Professor.objects.get(id=1)
+    contexto = {"professores": p}
+    return render(request, 'home.html', contexto)

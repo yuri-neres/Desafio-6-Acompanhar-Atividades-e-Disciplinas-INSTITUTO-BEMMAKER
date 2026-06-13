@@ -13,8 +13,8 @@ class Professor(models.Model):
     ativo = models.BooleanField(default=True, verbose_name='Ativo')
 
 class Meta:
-    verbose_name = 'Pessoa'
-    verbose_name_plural = 'Pessoas'
+    verbose_name = 'Professor'
+    verbose_name_plural = 'Professors'
     ordering = ['-data_criacao']
     indexes = [
         models.Index(fields=['nome']),
