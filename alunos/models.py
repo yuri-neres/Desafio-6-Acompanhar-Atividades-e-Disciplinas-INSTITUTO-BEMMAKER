@@ -13,8 +13,8 @@ class Aluno(models.Model):
     ativo = models.BooleanField(default=True, verbose_name='Ativo')
 
 class Meta:
-    verbose_name = 'Pessoa'
-    verbose_name_plural = 'Pessoas'
+    verbose_name = 'Aluno'
+    verbose_name_plural = 'Alunos'
     ordering = ['-data_criacao']
     indexes = [
         models.Index(fields=['nome']),
