@@ -37,17 +37,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
     'alunos',
-    'professores',
-    'coordenadores',
+    #'professores',
+    #'coordenadores',
 ]
 
 MY_APPS = [
     'core.apps.CoreConfig',
     'alunos.apps.AlunoConfig',
-    'professores.apps.ProfessorConfig',
-    'coordenadores.apps.CoordenadorConfig',
+    #'professores.apps.ProfessorConfig',
+    #'coordenadores.apps.CoordenadorConfig',
 ]
 
 MIDDLEWARE = [
