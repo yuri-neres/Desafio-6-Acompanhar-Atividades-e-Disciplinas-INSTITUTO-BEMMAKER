@@ -1,0 +1,89 @@
+/* ==========================================================================
+   RESET, ESTRUTURA GERAL, CABEÇALHO E RODAPÉ (GLOBAL)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8fafc;
+    color: #0f2c3d;
+}
+
+.header {
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5%;
+    box-shadow: 0 2px 10px rgba(15, 44, 61, 0.05);
+    border-bottom: 1px solid #e2e8f0;
+    width: 100%;
+}
+
+.logo-container .logo { height: 50px; object-fit: contain; }
+.header-right { display: flex; align-items: center; gap: 30px; }
+.header-icons { display: flex; align-items: center; gap: 20px; }
+.icon-link { color: #0f2c3d; font-size: 1.3rem; text-decoration: none; transition: color 0.2s ease; }
+.icon-link:hover { color: #f2af13; }
+
+.footer {
+    background-color: #0f2c3d;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: 100%;
+    margin-top: auto;
+    border-top: 3px solid #f2af13;
+}
+
+/* ==========================================================================
+   PÁGINA INICIAL (ESCOLHA DE PERFIL - home.html)
+   ========================================================================== */
+.content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+}
+
+.secao-escolha-perfil { width: 100%; max-width: 900px; text-align: center; }
+.boas-vindas { margin-bottom: 50px; }
+.boas-vindas h1 { font-size: 2.2rem; font-weight: 700; color: #0f2c3d; margin-bottom: 12px; }
+.boas-vindas p { font-size: 1.1rem; color: #64748b; font-weight: 500; }
+
+.container-cards { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; width: 100%; }
+
+.card-perfil {
+    background-color: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 40px 30px;
+    width: 320px;
+    text-decoration: none;
+    color: #0f2c3d;
+    box-shadow: 0 10px 25px rgba(15, 44, 61, 0.03);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.card-perfil .icone-wrapper { font-size: 4rem; margin-bottom: 25px; transition: transform 0.3s ease; }
+.card-perfil h2 { font-size: 1.6rem; font-weight: 600; margin-bottom: 12px; }
+.card-perfil p { font-size: 0.95rem; color: #64748b; line-height: 1.5; }
+
+.card-perfil.aluno .icone-wrapper { color: #f2af13; }
+.card-perfil.aluno:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(242, 175, 19, 0.12); border-color: #f2af13; }
+.card-perfil.professor .icone-wrapper { color: #0f2c3d; }
+.card-perfil.professor:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(15, 44, 61, 0.12); border-color: #0f2c3d; }
+.card-perfil:hover .icone-wrapper { transform: scale(1.08); }

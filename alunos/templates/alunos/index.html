@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Aluno | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo">
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="perfil-identificacao">
+                <span class="nome-aluno">Estudante</span>
+                <span class="tag-perfil">Aluno</span>
+            </div>
+            <div class="header-icons">
+                <a href="#" class="icon-link"><i class="fa-regular fa-bell"></i></a>
+                <a href="{% url 'home' %}" class="icon-link" title="Sair do Painel"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard">
+        <section class="container-dashboard">
+            <div class="boas-vindas-dashboard">
+                <div class="texto-banner">
+                    <h1>Olá, Aluno!</h1>
+                    <p>Acompanhe suas notas, verifique sua frequência e fique por dentro das atividades e prazos de entrega das suas disciplinas.</p>
+                </div>
+                <div class="icone-banner">
+                    <i class="fa-solid fa-user-graduate"></i>
+                </div>
+            </div>
+
+            <div class="grid-dashboard">
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card azul">
+                        <i class="fa-solid fa-book-open-reader"></i>
+                    </div>
+                    <h3>Minhas Disciplinas</h3>
+                    <p>Acesse o material de aula, cronograma e professores de cada matéria.</p>
+                </a>
+
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card amarelo">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3>Boletim e Notas</h3>
+                    <p>Confira os resultados das suas avaliações e a sua média final.</p>
+                </a>
+
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card azul">
+                        <i class="fa-regular fa-calendar-check"></i>
+                    </div>
+                    <h3>Minha Frequência</h3>
+                    <p>Acompanhe seu percentual de presenças e histórico de faltas.</p>
+                </a>
+
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card amarelo">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3>Atividades e Prazos</h3>
+                    <p>Veja as tarefas pendentes, trabalhos em grupo e datas de entrega.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Instituto Bemmaker. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

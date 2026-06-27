@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def index_professor(request):
+    return render(request, 'professores/index.html')

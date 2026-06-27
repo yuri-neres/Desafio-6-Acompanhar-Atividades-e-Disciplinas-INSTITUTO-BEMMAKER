@@ -1,0 +1,87 @@
+/* ==========================================================================
+   DASHBOARD DO PROFESSOR (index.html de Professores)
+   ========================================================================== */
+.perfil-identificacao {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.perfil-identificacao .nome-professor { font-weight: 600; font-size: 0.95rem; color: #0f2c3d; }
+.perfil-identificacao .tag-perfil { font-size: 0.75rem; color: #64748b; font-weight: 500; }
+
+.content-dashboard {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 50px 20px;
+}
+
+.container-dashboard { display: flex; flex-direction: column; gap: 40px; }
+
+.boas-vindas-dashboard {
+    background-color: #0f2c3d;
+    border-radius: 12px;
+    padding: 40px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 10px 25px rgba(15, 44, 61, 0.15);
+    border-left: 8px solid #f2af13;
+}
+
+.boas-vindas-dashboard h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 10px; }
+.boas-vindas-dashboard p { font-size: 1.1rem; color: #cbd5e1; max-width: 600px; line-height: 1.5; }
+.icone-banner { font-size: 5rem; color: rgba(255, 255, 255, 0.1); }
+
+.grid-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 30px;
+}
+
+.card-dashboard {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 35px 25px;
+    text-decoration: none;
+    color: #0f2c3d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+}
+
+.card-dashboard:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(15, 44, 61, 0.1);
+    border-color: #cbd5e1;
+}
+
+.icone-card {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.icone-card.azul { background-color: #e6f0f9; color: #0f2c3d; }
+.icone-card.amarelo { background-color: #fef6e5; color: #f2af13; }
+
+.card-dashboard h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 12px; }
+.card-dashboard p { font-size: 0.9rem; color: #64748b; line-height: 1.5; }
+
+@media (max-width: 768px) {
+    .boas-vindas-dashboard { flex-direction: column; text-align: center; padding: 30px 20px; }
+    .boas-vindas-dashboard .icone-banner { display: none; }
+    .perfil-identificacao { display: none; }
+}
