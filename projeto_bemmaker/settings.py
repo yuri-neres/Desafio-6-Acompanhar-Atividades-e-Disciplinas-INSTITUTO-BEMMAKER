@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    #'alunos',
-    #'professores',
-    #'coordenadores',
+    'alunos',
+    'professores',
+    'coordenadores',
 ]
 
 MY_APPS = [
