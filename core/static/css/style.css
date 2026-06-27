@@ -41,36 +41,20 @@
 
 /* LOGO */
 .logo {
-    height: 60px;   /* ajusta tamanho */
+    height: 60px;   
     width: auto;
 }
 
 .container {
     display: flex;
-    flex: 1;       /* Faz o container ocupar o resto da altura da tela */
+    flex: 1;       
 }
 
 .main-content {
     display: flex;
     flex: 1;
     flex-direction: column;
-    min-height: calc(100vh - 70px); /* Garante que o conteúdo ocupe toda a altura disponível */
-}
-
-/* USUÁRIO E AVATAR ESTÃO "ESCONDIDOS"*/
-.usuario {
-    font-size: 14px;
-    color: #333;
-    align-items: center;
-    gap: 10px;
-    display: flex;
-}
-
-.avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background-color: #ccc;
+    min-height: calc(100vh - 70px); 
 }
 
 body {
@@ -78,7 +62,6 @@ body {
     background-color: #f4f6f9;
     color: var(--text);
     min-height: 100vh;
-    display: flex;
     flex-direction: column;
 }
 
@@ -102,12 +85,47 @@ body {
     text-decoration: underline;
 }
 
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+
+    background-color: white;
+    min-width: 180px;
+
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 12px 16px;
+    color: #0A2E5C;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    background-color: #E6EEF8;
+    text-decoration: none;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 /* CONTAINER PRINCIPAL */
 .content {
     flex: 1;
     padding: 20px;
-    background: white;
     margin: 20px;
+    background-color: #f9f9f9;
     border-radius: 12px;
     box-shadow: 0 6px 20px rgba(0,0,0,0.08);
     min-height: calc(100vh - 70px);

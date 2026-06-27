@@ -12,6 +12,11 @@
     <!-- Link para Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+{% block extra_css %}
+{% endblock %}
+
 </head>
 
 <body>
@@ -19,19 +24,17 @@
     <header class="header">
         <div><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></div>
     <div class="header-right">
-        <div class="header-icons">
-            <a href="#"><i class="fa-regular fa-bell" style="display: none;"></i></a>
-        </div>
-        <div class="usuario" style="display: none;">
-            <div class="avatar" style="display: none;"></div>
-            <span>Usuário</span>
-        </div>
     </div>
 
     </header>
     {% if user.is_authenticated %}
     <nav class="menu">
-    <a href="#">Home</a>
+    <a href="{% url 'home_coordenacao' %}">Dashboard</a>
+    <a href="{% url 'cadastrar_aluno' %}">Alunos</a>
+    <a href="{% url 'cadastrar_professor' %}">Professores</a>
+    <a href="{% url 'cadastrar_disciplina' %}">Disciplinas</a>
+    <a href="{% url 'cadastrar_atividade' %}">Atividades</a>
+    <a href="{% url 'cadastrar_turma' %}">Turmas</a>
 </nav>
 {% endif %}
 
@@ -45,10 +48,10 @@
             {% endfor %}
         {% endif %}
 
-        <main class="container">
-        {% block conteudo %}
+        <div>
+        {% block content %}
         {% endblock %}
-        </main>
+        </div>
     </main>
     </div>
     <footer class="footer">

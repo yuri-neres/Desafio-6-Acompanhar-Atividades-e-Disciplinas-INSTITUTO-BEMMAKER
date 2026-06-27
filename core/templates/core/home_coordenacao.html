@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/home_coordenacao.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1 class="titulo">📊 Painel de Gestão Acadêmica (Coordenação)</h1>
+
+    <div class="cards-container">
+        <div class="card">
+            <h3>👨‍🎓 Alunos</h3>
+            <p>--</p>
+        </div>
+
+        <div class="card">
+            <h3>👩‍🏫 Professores</h3>
+            <p>--</p>
+        </div>
+
+        <div class="card">
+            <h3>📚 Disciplinas</h3>
+            <p>--</p>
+        </div>
+
+        <div class="card">
+            <h3>📝 Turmas</h3>
+            <p>--</p>
+        </div>
+    </div>
+
+        <div class="relatorio-container">
+            <h2>📈 Relatório de Atividades</h2>
+            <p>--</p>
+</div>
+
+{% endblock %}
