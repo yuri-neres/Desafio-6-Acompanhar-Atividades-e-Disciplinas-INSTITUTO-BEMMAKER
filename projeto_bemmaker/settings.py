@@ -37,17 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
+    #'core',
     'alunos',
-    'professores',
-    'coordenadores',
+    #'professores',
+    #'coordenadores',
+    'crispy_forms',
+    'crispy_bootstrap5',
 ]
 
+CRISPY_ALLOWED_TEMPLATE_PACKS = ["bootstrap5"]
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+
 MY_APPS = [
-    'core.apps.CoreConfig',
+    #'core.apps.CoreConfig',
     'alunos.apps.AlunoConfig',
-    'professores.apps.ProfessorConfig',
-    'coordenadores.apps.CoordenadorConfig',
+    #'professores.apps.ProfessorConfig',
+    #'coordenadores.apps.CoordenadorConfig',
 ]
 
 MIDDLEWARE = [

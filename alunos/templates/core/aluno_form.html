@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="form-container">
+    <h2>Cadastrar Aluno</h2>
+
+    <form method="post">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+
+        <button type="submit" class="btn-salvar">
+            Salvar
+        </button>
+    </form>
+</div>
+
+{% endblock %}

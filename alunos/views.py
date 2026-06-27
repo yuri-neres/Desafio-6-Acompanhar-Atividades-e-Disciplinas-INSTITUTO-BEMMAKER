@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 
-#from .models import Aluno, Atividade, Disciplina  
-#from .forms import AlunoForm, AtividadeForm    
+from .models import Aluno  
+from .forms import AlunoForm  
 
 @login_required
 def base(request):
@@ -55,16 +55,15 @@ def home_coordenacao(request):
 
 @login_required
 def cadastrar_aluno(request):
-    return render(request, 'core/cadastrar_aluno.html')
-#     """Formulário de cadastro de novos estudantes para apoio à permanência"""
-#     if request.method == 'POST':
-#         form = AlunoForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('lista_alunos')
-#     else:
-#         form = AlunoForm()
-#     return render(request, 'core/aluno_form.html', {'form': form, 'titulo': 'Cadastrar Aluno'})
+    """Formulário de cadastro de novos estudantes para apoio à permanência"""
+    if request.method == 'POST':
+        form = AlunoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_alunos')
+    else:
+        form = AlunoForm()
+    return render(request, 'core/aluno_form.html', {'form': form, 'titulo': 'Cadastrar Aluno'})
 
 # @login_required
 # def editar_aluno(request, pk):
@@ -92,16 +91,15 @@ def cadastrar_aluno(request):
 
 @login_required
 def cadastrar_atividade(request):
-    return render(request, 'core/cadastrar_atividade.html') # será substituído após criação de models
-#     """Permite à coordenação estipular novos prazos e tarefas"""
-#     if request.method == 'POST':
-#         form = AtividadeForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('lista_atividades')
-#     else:
-#         form = AtividadeForm()
-#     return render(request, 'core/atividade_form.html', {'form': form, 'titulo': 'Criar Nova Atividade'})
+    """Permite à coordenação estipular novos prazos e tarefas"""
+    if request.method == 'POST':
+        form = AtividadeForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_atividades')
+    else:
+        form = AtividadeForm()
+    return render(request, 'core/atividade_form.html', {'form': form, 'titulo': 'Criar Nova Atividade'})
 
 # @login_required
 # def editar_atividade(request, pk):
