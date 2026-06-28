@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
-from .views import base, login, home_coordenacao, cadastrar_aluno, cadastrar_professor, cadastrar_disciplina, cadastrar_atividade, cadastrar_turma
+from .views import base, login, home_coordenacao, cadastrar_aluno
+from professores.views import cadastrar_professor
 
 urlpatterns = [
 

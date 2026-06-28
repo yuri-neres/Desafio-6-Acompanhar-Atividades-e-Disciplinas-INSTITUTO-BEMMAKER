@@ -3,8 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 
-from .models import Aluno  
-from .forms import AlunoForm  
+from .models import Aluno
+from .forms import AlunoForm
 
 @login_required
 def base(request):
@@ -118,9 +118,16 @@ def cadastrar_atividade(request):
 # MÓDULO ACADÊMICO (GESTÃO DE PROFESSORES)
 #========================================================================
 
-@login_required
-def cadastrar_professor(request):
-    return render(request, 'core/cadastrar_professor.html') # será substituído após criação de models
+# @login_required
+# def cadastrar_professor(request):
+#     if request.method == 'POST':
+#         form = ProfessorForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('lista_professores')
+#     else:
+#         form = ProfessorForm()
+#     return render(request, 'core/professor_form.html', {'form': form}) # será substituído após criação de models
 
 
 # #=========================================================================

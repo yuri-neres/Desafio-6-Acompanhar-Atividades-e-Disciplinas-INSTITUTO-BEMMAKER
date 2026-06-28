@@ -51,7 +51,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 MY_APPS = [
     #'core.apps.CoreConfig',
     'alunos.apps.AlunoConfig',
-    #'professores.apps.ProfessorConfig',
+    'professores.apps.ProfessorConfig',
     #'coordenadores.apps.CoordenadorConfig',
 ]
 
