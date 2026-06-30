@@ -49,12 +49,4 @@ class AlunoForm(forms.ModelForm):
 #             'disciplina': forms.Select(attrs={'class': 'form-control'}),
 #         }
 
-# class TurmaForm(forms.ModelForm):
-#     class Meta:
-#         model = Turma
-#         fields = ['nome', 'codigo', 'turno']
-#         widgets = {
-#             'nome': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Nome da turma'}),
-#             'codigo': forms.TextInput(attrs={'class': 'form-control','placeholder': 'Ex: TDS-2026-A'}),
-#             'turno': forms.Select(attrs={'class': 'form-control'}),
-#         }
+# 

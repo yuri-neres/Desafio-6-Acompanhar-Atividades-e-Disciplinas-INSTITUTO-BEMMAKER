@@ -14,14 +14,14 @@ def cadastrar_professor(request):
 
         if form.is_valid():
             form.save()
-            return redirect('lista_professores')
+            return redirect('cadastrar_professor')  # Redireciona para a mesma página após o cadastro
 
     else:
         form = ProfessorForm()
 
     return render(
         request,
-        'core/professor_form.html',
+        'professores/professor_form.html',
         {
             'form': form,
             'titulo': 'Cadastrar Professor'

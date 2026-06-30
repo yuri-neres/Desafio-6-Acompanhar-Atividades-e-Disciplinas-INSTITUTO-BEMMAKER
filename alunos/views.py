@@ -8,7 +8,7 @@ from .forms import AlunoForm
 
 @login_required
 def base(request):
-    return render(request, 'core/base.html')
+    return render(request, 'alunos/base.html')
 
 def login(request):
     if request.method == 'POST':
@@ -21,11 +21,11 @@ def login(request):
             auth_login(request, user)
             return redirect('home_coordenacao')  
         else:
-            return render(request, 'core/login.html', {
+            return render(request, 'alunos/login.html', {
                 'erro': 'Usuário ou senha incorretos. Tente novamente.'
             })
 
-    return render(request, 'core/login.html')
+    return render(request, 'alunos/login.html')
 # =========================================================================
 # TELA INICIAL PÓS-LOGIN (DASHBOARD COORDENAÇÃO)
 # =========================================================================
@@ -33,7 +33,7 @@ def login(request):
 @login_required
 def home_coordenacao(request):
     """Exibe o painel gerencial pedagógico com contadores em tempo real"""
-    return render(request, 'core/home_coordenacao.html')
+    return render(request, 'alunos/home_coordenacao.html')
     # context = {
     #     'total_alunos': Aluno.objects.count(),
     #     'total_disciplinas': Disciplina.objects.count(),
@@ -63,7 +63,7 @@ def cadastrar_aluno(request):
             return redirect('lista_alunos')
     else:
         form = AlunoForm()
-    return render(request, 'core/aluno_form.html', {'form': form, 'titulo': 'Cadastrar Aluno'})
+    return render(request, 'alunos/aluno_form.html', {'form': form, 'titulo': 'Cadastrar Aluno'})
 
 # @login_required
 # def editar_aluno(request, pk):
@@ -129,14 +129,6 @@ def cadastrar_atividade(request):
 #         form = ProfessorForm()
 #     return render(request, 'core/professor_form.html', {'form': form}) # será substituído após criação de models
 
-
-# #=========================================================================
-# # MÓDULO ACADÊMICO (ACOMPANHAMENTO DE TURMAS)
-# #=========================================================================
-
-login_required
-def cadastrar_turma(request):
-    return render(request, 'core/cadastrar_turma.html') # será substituído após criação de models
 
 #=========================================================================
 # MÓDULO ACADÊMICO (GESTÃO DE DISCIPLINAS)

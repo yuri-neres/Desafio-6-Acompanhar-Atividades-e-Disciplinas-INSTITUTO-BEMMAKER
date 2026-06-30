@@ -25,18 +25,10 @@ urlpatterns = [
 #     path('atividades/editar/<int:pk>/', views.editar_atividade, name='editar_atividade'),
 
 
-    # Módulo Acadêmico (Professores)
-#    path('professores/', views.lista_professores, name='lista_professores'),
-     path('professores/novo/', views.cadastrar_professor, name='cadastrar_professor'),
-#    path('professores/editar/<int:pk>/', views.editar_professor, name='editar_professor'),
+    
 
 #   # Módulo Acadêmico (Disciplinas)
 #    path('disciplinas/', views.lista_disciplinas, name='lista_disciplinas'),
      path('disciplinas/nova/', views.cadastrar_disciplina, name='cadastrar_disciplina'),
 #    path('disciplinas/editar/<int:pk>/', views.editar_disciplina, name='editar_disciplina'),       
-
-    # Módulo Acadêmico (Turmas)
-#    path('turmas/', views.lista_turmas, name='lista_turmas'),
-     path('turmas/nova/', views.cadastrar_turma, name='cadastrar_turma'),
-#    path('turmas/editar/<int:pk>/', views.editar_turma, name='editar_turma'),
 ]

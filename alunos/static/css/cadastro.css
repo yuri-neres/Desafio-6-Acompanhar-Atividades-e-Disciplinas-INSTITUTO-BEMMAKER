@@ -1,60 +1,122 @@
+/*Telas de Cadastro */
+
+/* Estilo geral da página */
+body {
+    background-color: #f8fafc; /* Cor de fundo clara */
+    font-family: Arial, Helvetica, sans-serif; /* Fonte padrão */
+}
+
+/* Caixa principal do formulário */
 .form-container {
-    max-width: 750px;
-    margin: 40px auto;
-    padding: 35px;
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    max-width: 700px; /* Largura máxima do formulário */
+    margin: 50px auto; /* Centraliza horizontalmente e adiciona margem superior */
+    padding: 40px; /* Espaçamento interno */
+    background: #ffffff; /* Fundo branco */
+    border-radius: 15px; /* Cantos arredondados */
+    box-shadow: 0 10px 25px rgba(15, 44, 61, 0.08); /* Sombra suave */
+    border-top: 6px solid #f2af13; /* Faixa amarela no topo */
 }
 
+/* Título do formulário */
 .form-container h2 {
-    font-size: 32px;
-    text-align: center;
-    margin-bottom: 30px;
+    color: #0f2c3d; /* Cor azul escura */
+    text-align: center; /* Centraliza o texto */
+    margin-bottom: 30px; /* Espaço abaixo do título */
+    font-size: 2rem; /* Tamanho da fonte */
+    font-weight: 700; /* Negrito */
 }
 
-/* Labels */
+/* Estilo das labels (Nome, E-mail, etc.) */
 .form-label {
-    font-size: 18px;
+    color: #0f2c3d;
     font-weight: 600;
-    margin-bottom: 8px;
 }
 
-/* Campos gerados pelo Crispy/Bootstrap */
+/* Estilo dos campos de texto e listas de seleção */
 .form-control,
 .form-select {
-    font-size: 20px;
-    padding: 16px 18px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #dcdcdc;
+    border-radius: 10px; /* Cantos arredondados */
+    border: 1px solid #dbe4ee; /* Borda cinza clara */
+    padding: 12px; /* Espaçamento interno */
+    transition: .3s; /* Animação suave */
 }
 
+/* Efeito quando o usuário clica no campo */
 .form-control:focus,
 .form-select:focus {
-    border-color: #0d6efd;
-    box-shadow: 0 0 8px rgba(13,110,253,0.3);
+    border-color: #f2af13; /* Borda amarela */
+    box-shadow: 0 0 0 0.2rem rgba(242, 175, 19, 0.25);
 }
 
-/* Espaço entre os grupos de campos */
-.mb-3 {
-    margin-bottom: 25px !important;
+/* Efeito quando passa o mouse */
+.form-control:hover,
+.form-select:hover {
+    border-color: #0f2c3d; /* Destaca a borda em azul */
 }
 
-/* Botão */
+/* Botão de salvar */
 .btn-salvar {
-    width: 100%;
-    padding: 15px;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    border-radius: 10px;
-    background: #0d6efd;
-    color: white;
-    margin-top: 15px;
-    cursor: pointer;
+    width: 100%; /* Ocupa toda a largura do formulário */
+    margin-top: 25px; /* Espaço acima do botão */
+    padding: 14px; /* Espaçamento interno */
+    border: none; /* Remove a borda */
+    border-radius: 10px; /* Cantos arredondados */
+    background-color: #0f2c3d; /* Fundo azul escuro */
+    color: white; /* Texto branco */
+    font-size: 1rem; /* Tamanho da fonte */
+    font-weight: 600; /* Texto em negrito */
+    cursor: pointer; /* Cursor de mão */
+    transition: .3s; /* Animação suave */
 }
 
+/* Efeito ao passar o mouse no botão */
 .btn-salvar:hover {
-    background: #0b5ed7;
+    background-color: #f2af13; /* Fundo amarelo */
+    color: #0f2c3d; /* Texto azul */
 }
+
+/* Texto de ajuda exibido pelo Django */
+.helptext {
+    font-size: .85rem;
+    color: #64748b;
+}
+
+/* Mensagens de erro de validação */
+.invalid-feedback {
+    color: #dc3545; /* Vermelho */
+    font-size: .9rem;
+}
+
+/* Animação do formulário ao carregar a página */
+.form-container {
+    animation: aparecer 0.4s ease;
+}
+
+/* Define a animação */
+@keyframes aparecer {
+    from {
+        opacity: 0; /* Começa invisível */
+        transform: translateY(15px); /* Levemente abaixo */
+    }
+
+    to {
+        opacity: 1; /* Fica totalmente visível */
+        transform: translateY(0); /* Volta para a posição original */
+    }
+}
+
+/* RESPONSIVIDADE
+  
+@media (max-width: 768px) {
+
+    /* Diminui a margem e o espaçamento do formulário */
+    .form-container {
+        margin: 20px;
+        padding: 25px;
+    }
+
+    /* Reduz o tamanho do título */
+    .form-container h2 {
+        font-size: 1.6rem;
+    }
+

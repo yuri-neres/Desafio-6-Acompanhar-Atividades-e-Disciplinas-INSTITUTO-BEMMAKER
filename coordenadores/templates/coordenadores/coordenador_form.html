@@ -1,13 +1,13 @@
-{% extends 'core/base.html' %}
+{% extends 'alunos/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
+
 {% block content %}
 
 <link rel="stylesheet" href="{% static 'css/cadastro.css' %}">
 
-
 <div class="form-container">
-    <h2>Cadastrar Professor</h2>
+    <h2>Cadastrar Coordenador</h2>
 
     <form method="post">
         {% csrf_token %}

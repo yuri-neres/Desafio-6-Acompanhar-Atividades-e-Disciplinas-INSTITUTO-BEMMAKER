@@ -21,8 +21,8 @@ body {
 }
 
 .card {
-  background-color: #ffe02d;
-  color: #0A2E5C;
+  background-color: #0A2E5C;
+  color: white;
   border-radius: 12px;
   padding: 24px;
   text-align: center;
@@ -32,8 +32,8 @@ body {
 
 .card:hover {
   transform: translateY(-4px);
-  background-color: #0A2E5C;
-  color: white;
+  background-color: #ffe02d;
+  color: #0A2E5C;
 }
 
 .relatorio-container {

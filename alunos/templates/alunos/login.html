@@ -1,0 +1,57 @@
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="login-container">
+
+    <div class="login-box">
+
+        <!-- Cabeçalho -->
+        <div class="logo-login">
+            <h2>Sistema Acadêmico</h2>
+            <p>Faça login para continuar</p>
+        </div>
+
+        <!-- Formulário de login -->
+        <form method="post">
+            {% csrf_token %}
+
+            <label for="username">Usuário</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Digite seu usuário"
+                required
+            >
+
+            <label for="password">Senha</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Digite sua senha"
+                required
+            >
+
+            <button type="submit">
+                Entrar
+            </button>
+        </form>
+
+        <!-- Mensagem de erro -->
+        {% if erro %}
+            <div class="erro">
+                {{ erro }}
+            </div>
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endblock %}
