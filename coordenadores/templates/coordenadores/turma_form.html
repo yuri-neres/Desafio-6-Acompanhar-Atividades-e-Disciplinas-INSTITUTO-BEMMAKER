@@ -1,4 +1,3 @@
-{% extends 'coordenadores/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
@@ -7,8 +6,7 @@
 
 
 <div class="form-container">
-    <h2>Gestão Acadêmica</h2>
-    <h3>Cadastrar Turma</h3>
+    <h2>Cadastrar Turma</h2>
 
     <form method="post">
         {% csrf_token %}
