@@ -4,11 +4,13 @@
 body {
     background-color: #f8fafc; /* Cor de fundo clara */
     font-family: Arial, Helvetica, sans-serif; /* Fonte padrão */
+    display: flex; /* Usa flexbox para centralizar o conteúdo */
+    justify-content: center; /* Centraliza horizontalmente */
 }
 
 /* Caixa principal do formulário */
 .form-container {
-    max-width: 700px; /* Largura máxima do formulário */
+    max-width: 800px; /* Largura máxima do formulário */
     margin: 50px auto; /* Centraliza horizontalmente e adiciona margem superior */
     padding: 40px; /* Espaçamento interno */
     background: #ffffff; /* Fundo branco */
@@ -19,11 +21,22 @@ body {
 
 /* Título do formulário */
 .form-container h2 {
-    color: #0f2c3d; /* Cor azul escura */
-    text-align: center; /* Centraliza o texto */
-    margin-bottom: 30px; /* Espaço abaixo do título */
-    font-size: 2rem; /* Tamanho da fonte */
-    font-weight: 700; /* Negrito */
+    color: #0f2c3d; 
+    text-align: center; 
+    margin-bottom: 30px; 
+    font-size: 2rem; 
+    font-weight: 700; 
+}
+
+/* Subtítulo do formulário */
+.subtitulo{
+    text-align: center;
+    color: #0f2c3d;     
+    font-size: 1rem;     
+    font-weight: 400;    
+    line-height: 1.6;
+    max-width: 650px;
+    margin: 0 auto 35px;
 }
 
 /* Estilo das labels (Nome, E-mail, etc.) */
@@ -35,16 +48,16 @@ body {
 /* Estilo dos campos de texto e listas de seleção */
 .form-control,
 .form-select {
-    border-radius: 10px; /* Cantos arredondados */
-    border: 1px solid #dbe4ee; /* Borda cinza clara */
-    padding: 12px; /* Espaçamento interno */
-    transition: .3s; /* Animação suave */
+    border-radius: 10px; 
+    border: 1px solid #dbe4ee; 
+    padding: 12px; 
+    transition: .3s; 
 }
 
 /* Efeito quando o usuário clica no campo */
 .form-control:focus,
 .form-select:focus {
-    border-color: #f2af13; /* Borda amarela */
+    border-color: #f2af13; 
     box-shadow: 0 0 0 0.2rem rgba(242, 175, 19, 0.25);
 }
 
@@ -56,23 +69,23 @@ body {
 
 /* Botão de salvar */
 .btn-salvar {
-    width: 100%; /* Ocupa toda a largura do formulário */
-    margin-top: 25px; /* Espaço acima do botão */
-    padding: 14px; /* Espaçamento interno */
-    border: none; /* Remove a borda */
-    border-radius: 10px; /* Cantos arredondados */
-    background-color: #0f2c3d; /* Fundo azul escuro */
-    color: white; /* Texto branco */
-    font-size: 1rem; /* Tamanho da fonte */
-    font-weight: 600; /* Texto em negrito */
-    cursor: pointer; /* Cursor de mão */
-    transition: .3s; /* Animação suave */
+    width: 100%;
+    margin-top: 25px; 
+    padding: 14px; 
+    border: none; 
+    border-radius: 10px; 
+    background-color: #0f2c3d; 
+    color: white; 
+    font-size: 1rem; 
+    font-weight: 600; 
+    cursor: pointer; 
+    transition: .3s; 
 }
 
 /* Efeito ao passar o mouse no botão */
 .btn-salvar:hover {
-    background-color: #f2af13; /* Fundo amarelo */
-    color: #0f2c3d; /* Texto azul */
+    background-color: #f2af13; 
+    color: #0f2c3d; 
 }
 
 /* Texto de ajuda exibido pelo Django */

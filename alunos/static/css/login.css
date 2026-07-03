@@ -50,6 +50,22 @@ body{
     font-size:.95rem;
 }
 
+/* Link "Esqueceu a senha?" */
+.login-links{
+    text-align:center;
+    margin-top:18px;
+}
+
+.login-links a{
+    color:#0f2c3d;
+    text-decoration:none;
+    font-size:.95rem;
+    font-weight:500;
+    transition:.3s;
+    text-decoration:underline;
+}
+
+
 /* Labels */
 label{
     display:block;
