@@ -1,16 +1,136 @@
+/* Estilo geral da página */
+body{
+    background-color:#f8fafc;
+    font-family:Arial, Helvetica, sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+/* Container do login */
+.login-container{
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+/* Caixa do login */
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:#ffffff;
+    padding:40px;
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(15,44,61,.08);
+    border-top:6px solid #f2af13;
+    animation:aparecer .4s ease;
+}
+
+/* Cabeçalho */
 .logo-login{
     text-align:center;
     margin-bottom:30px;
 }
-
+/* Título, define linha abaixo do título e espaços usuário e senha */
 .logo-login h2{
     color:#0f2c3d;
-    margin-bottom:8px;
     font-size:2rem;
     font-weight:700;
+    margin-bottom:8px;
+    border-bottom:#f2af13 3px solid;
+    display:inline-block;
+    padding-bottom:8px;
 }
 
 .logo-login p{
     color:#64748b;
-    margin:0;
+    font-size:.95rem;
+}
+
+/* Labels */
+label{
+    display:block;
+    margin-top:18px;
+    margin-bottom:8px;
+    color:#0f2c3d;
+    font-weight:600;
+}
+
+/* Campos */
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #dbe4ee;
+    border-radius:10px;
+    font-size:1rem;
+    transition:.3s;
+}
+
+input:focus{
+    outline:none;
+    border-color:#f2af13;
+    box-shadow:0 0 0 .2rem rgba(242,175,19,.25);
+}
+
+input:hover{
+    border-color:#0f2c3d;
+}
+
+/* Botão */
+button{
+    width:100%;
+    margin-top:25px;
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    background:#0f2c3d;
+    color:#fff;
+    font-size:1rem;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#f2af13;
+    color:#0f2c3d;
+}
+
+/* Mensagem de erro */
+.erro{
+    margin-top:20px;
+    padding:12px;
+    background:#fdeaea;
+    color:#dc3545;
+    border-radius:10px;
+    text-align:center;
+}
+
+/* Animação */
+@keyframes aparecer{
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* Responsividade */
+@media (max-width:768px){
+
+    .login-box{
+        margin:20px;
+        padding:30px;
+    }
+
+    .logo-login h2{
+        font-size:1.7rem;
+    }
 }
