@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from core.decorators import professor_required
 
-@login_required
+@professor_required
 def index_professor(request):
     return render(request, 'professores/index.html')

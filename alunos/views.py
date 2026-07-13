@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from core.decorators import aluno_required
 
 # Create your views here.
-@login_required
+@aluno_required
 def index_aluno(request):
     return render(request, 'alunos/index.html')

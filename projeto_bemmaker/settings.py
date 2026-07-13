@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = 'login'
 
 # Para onde redirecionar após o login (caso ele acesse o login diretamente)
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'redirecionar_perfil'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
