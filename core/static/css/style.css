@@ -56,7 +56,7 @@ body {
     padding: 60px 20px;
 }
 
-.secao-escolha-perfil { width: 100%; max-width: 900px; text-align: center; }
+.secao-escolha-perfil { width: 100%; max-width: 1200px; text-align: center; }
 .boas-vindas { margin-bottom: 50px; }
 .boas-vindas h1 { font-size: 2.2rem; font-weight: 700; color: #0f2c3d; margin-bottom: 12px; }
 .boas-vindas p { font-size: 1.1rem; color: #64748b; font-weight: 500; }
@@ -87,6 +87,16 @@ body {
 .card-perfil.professor .icone-wrapper { color: #0f2c3d; }
 .card-perfil.professor:hover { transform: translateY(-8px); box-shadow: 0 20px 35px rgba(15, 44, 61, 0.12); border-color: #0f2c3d; }
 .card-perfil:hover .icone-wrapper { transform: scale(1.08); }
+/* Estilos para o card do Coordenador */
+.card-perfil.coordenador .icone-wrapper { 
+    color: #10b981; /* Verde esmeralda para diferenciar dos demais */
+}
+
+.card-perfil.coordenador:hover { 
+    transform: translateY(-8px); 
+    box-shadow: 0 20px 35px rgba(16, 185, 129, 0.12); 
+    border-color: #10b981; 
+}
 
 /* ==========================================================================
    TELA DE LOGIN (login.html)

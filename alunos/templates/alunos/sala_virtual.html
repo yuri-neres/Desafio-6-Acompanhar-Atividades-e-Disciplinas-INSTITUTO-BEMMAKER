@@ -1,0 +1,160 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ turma.disciplina.nome }} | Sala Virtual</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #10b981; }
+        
+        .header-disciplina { background-color: #0f2c3d; color: white; padding: 30px; border-radius: 8px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .header-disciplina h2 { margin: 0 0 10px 0; color: #10b981; font-size: 1.8em; }
+        
+        .layout-sala { display: grid; grid-template-columns: 250px 1fr; gap: 30px; }
+        
+        .menu-lateral { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .menu-lateral a { display: block; padding: 12px 15px; margin-bottom: 10px; color: #333; text-decoration: none; border-radius: 6px; font-weight: 500; transition: 0.2s; cursor: pointer; }
+        .menu-lateral a:hover, .menu-lateral a.ativo { background-color: #e2e8f0; color: #0f2c3d; border-left: 4px solid #10b981; }
+        
+        .conteudo-principal { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); min-height: 400px; }
+        
+        /* Estilos para as listas internas */
+        .item-lista { padding: 15px; border: 1px solid #e2e8f0; border-radius: 6px; margin-bottom: 15px; }
+        .item-lista h4 { margin: 0 0 5px 0; color: #0f2c3d; }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}"><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></a>
+        </div>
+        <div class="header-right">
+            <div class="perfil-identificacao">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+            </div>
+            <div class="header-icons">
+                <a href="{% url 'sair' %}" class="icon-link" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'alunos:disciplinas' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar para Disciplinas
+            </a>
+
+            <div class="header-disciplina">
+                <div>
+                    <h2>{{ turma.disciplina.nome }}</h2>
+                    <p style="color: #e2e8f0; margin-bottom: 5px;">Turma: {{ turma.nome }} | Código: {{ turma.disciplina.codigo }}</p>
+                    <p style="color: #e2e8f0;">Professor: {% if turma.professor %} {{ turma.professor.usuario.get_full_name }} {% else %} A definir {% endif %}</p>
+                </div>
+                <div style="font-size: 3rem; color: rgba(255,255,255,0.1);"><i class="fa-solid fa-laptop-code"></i></div>
+            </div>
+
+            <div class="layout-sala">
+                <nav class="menu-lateral">
+                    <h4 style="margin-bottom: 15px; color: #0f2c3d; font-size: 0.9em; text-transform: uppercase;">Menu da Turma</h4>
+                    <a onclick="abrirAba('aba-mural', this)" class="menu-item ativo"><i class="fa-solid fa-bullhorn" style="width: 25px;"></i> Mural</a>
+                    <a onclick="abrirAba('aba-material', this)" class="menu-item"><i class="fa-solid fa-file-lines" style="width: 25px;"></i> Material de Aula</a>
+                    <a onclick="abrirAba('aba-atividades', this)" class="menu-item"><i class="fa-solid fa-list-check" style="width: 25px;"></i> Atividades</a>
+                    <a onclick="abrirAba('aba-notas', this)" class="menu-item"><i class="fa-solid fa-chart-pie" style="width: 25px;"></i> Minhas Notas</a>
+                </nav>
+
+                <div class="conteudo-principal">
+                    
+                    <div id="aba-mural" class="sessao-aba">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Mural de Avisos</h3>
+                        <div style="padding: 20px; border-left: 4px solid #10b981; background-color: #f8fafc; border-radius: 0 8px 8px 0;">
+                            <p style="color: #475569; line-height: 1.6;">Bem-vindo à sala virtual de <strong>{{ turma.disciplina.nome }}</strong>! Acompanhe por aqui as atualizações do seu professor.</p>
+                        </div>
+                    </div>
+
+                    <div id="aba-material" class="sessao-aba" style="display: none;">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Material de Aula</h3>
+                        {% for aula in aulas %}
+                            <div class="item-lista">
+                                <h4>{{ aula.titulo|default:"Aula Sem Título" }}</h4>
+                                <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;"><i class="fa-solid fa-calendar-day"></i> {{ aula.data|date:"d/m/Y" }}</p>
+                                <p>{{ aula.conteudo }}</p>
+                            </div>
+                        {% empty %}
+                            <p style="color: #666;">Nenhum material de aula foi postado ainda.</p>
+                        {% endfor %}
+                    </div>
+
+                    <div id="aba-atividades" class="sessao-aba" style="display: none;">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Atividades Pendentes</h3>
+                        {% for atv in atividades %}
+                            <div class="item-lista" style="border-left: 4px solid #f59e0b;">
+                                <h4>{{ atv.titulo }}</h4>
+                                <p style="font-size: 0.85em; color: #666; margin-bottom: 10px;"><strong>Prazo:</strong> {{ atv.data_entrega|date:"d/m/Y H:i" }}</p>
+                                <p>{{ atv.descricao }}</p>
+                            </div>
+                        {% empty %}
+                            <p style="color: #666;">Nenhuma atividade cadastrada no momento.</p>
+                        {% endfor %}
+                    </div>
+
+                    <div id="aba-notas" class="sessao-aba" style="display: none;">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Boletim de Notas</h3>
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <tr style="background-color: #f1f5f9; border-bottom: 2px solid #e2e8f0;">
+                                <th style="padding: 10px;">Avaliação</th>
+                                <th style="padding: 10px;">Data</th>
+                                <th style="padding: 10px;">Nota Obtida</th>
+                            </tr>
+                            {% for nota in notas %}
+                                <tr style="border-bottom: 1px solid #e2e8f0;">
+                                    <td style="padding: 10px;">{{ nota.avaliacao.nome }}</td>
+                                    <td style="padding: 10px;">{{ nota.avaliacao.data|date:"d/m/Y" }}</td>
+                                    <td style="padding: 10px; font-weight: bold; color: #10b981;">{{ nota.valor }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="3" style="padding: 10px; color: #666;">Nenhuma nota lançada ainda.</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        function abrirAba(idAba, elementoClicado) {
+            // 1. Esconde todas as abas
+            var abas = document.getElementsByClassName("sessao-aba");
+            for (var i = 0; i < abas.length; i++) {
+                abas[i].style.display = "none";
+            }
+            
+            // 2. Remove a classe 'ativo' de todos os itens do menu
+            var menus = document.getElementsByClassName("menu-item");
+            for (var i = 0; i < menus.length; i++) {
+                menus[i].classList.remove("ativo");
+            }
+            
+            // 3. Mostra a aba escolhida e adiciona 'ativo' no botão clicado
+            document.getElementById(idAba).style.display = "block";
+            elementoClicado.classList.add("ativo");
+        }
+    </script>
+</body>
+</html>

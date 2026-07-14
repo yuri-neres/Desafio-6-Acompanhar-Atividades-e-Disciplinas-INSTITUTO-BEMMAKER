@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'alunos',
     'professores',
     'coordenadores',
-    'disciplinas',
-    'atividades',
     'core',
+    'academico'
 ]
 
 MY_APPS = [
@@ -120,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 LOGIN_URL = 'login'
 
 # Para onde redirecionar após o login (caso ele acesse o login diretamente)
-LOGIN_REDIRECT_URL = 'redirecionar_perfil'
+LOGIN_REDIRECT_URL = 'home'
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/

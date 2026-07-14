@@ -24,10 +24,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path ('alunos/', include('alunos.urls')),
     path ('professores/', include('professores.urls')),
-    #path ('coordenadores/', include('coordenadores.urls')),
-
+    path('coordenadores/', include('coordenadores.urls', namespace='coordenadores')),
     # Autenticação
-    path('login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
-    path('redirecionar-perfil/', views.redirecionar_login, name='redirecionar_perfil'),
+    path('contas/', include('django.contrib.auth.urls')),
+    path('sair/', views.logout_view, name='sair'),
 ]

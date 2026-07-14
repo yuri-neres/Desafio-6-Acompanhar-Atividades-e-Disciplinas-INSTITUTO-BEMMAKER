@@ -11,9 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-    
     <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
@@ -26,12 +24,12 @@
         </div>
         <div class="header-right">
             <div class="perfil-identificacao">
-                <span class="nome-aluno">Estudante</span>
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
                 <span class="tag-perfil">Aluno</span>
             </div>
             <div class="header-icons">
                 <a href="#" class="icon-link"><i class="fa-regular fa-bell"></i></a>
-                <a href="{% url 'home' %}" class="icon-link" title="Sair do Painel"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href="{% url 'sair' %}" class="icon-link" title="Sair do Painel"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
         </div>
     </header>
@@ -40,7 +38,7 @@
         <section class="container-dashboard">
             <div class="boas-vindas-dashboard">
                 <div class="texto-banner">
-                    <h1>Olá, Aluno!</h1>
+                    <h2>Olá, {{ request.user.first_name }}!</h2>
                     <p>Acompanhe suas notas, verifique sua frequência e fique por dentro das atividades e prazos de entrega das suas disciplinas.</p>
                 </div>
                 <div class="icone-banner">
@@ -48,8 +46,9 @@
                 </div>
             </div>
 
+            <h3 style="color: #0f2c3d; margin-bottom: 15px;">Acesso Rápido</h3>
             <div class="grid-dashboard">
-                <a href="#" class="card-dashboard">
+                <a href="{% url 'alunos:disciplinas' %}" class="card-dashboard">
                     <div class="icone-card azul">
                         <i class="fa-solid fa-book-open-reader"></i>
                     </div>
@@ -80,6 +79,35 @@
                     <h3>Atividades e Prazos</h3>
                     <p>Veja as tarefas pendentes, trabalhos em grupo e datas de entrega.</p>
                 </a>
+            </div>
+
+            <h3 style="color: #0f2c3d; margin: 40px 0 15px 0;">Matrículas Ativas</h3>
+            <div class="grid-dashboard">
+                
+                {% for m in matriculas %}
+                    <a href="#" class="card-dashboard" style="text-decoration: none; color: inherit;">
+                        <div class="icone-card azul">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3 style="margin-bottom: 10px;">{{ m.turma.disciplina.nome }}</h3>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;"><strong>Código:</strong> {{ m.turma.disciplina.codigo }}</p>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;"><strong>Turma:</strong> {{ m.turma.nome }}</p>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;">
+                            <strong>Professor:</strong> 
+                            {% if m.turma.professor %}
+                                {{ m.turma.professor.usuario.get_full_name }}
+                            {% else %}
+                                A definir
+                            {% endif %}
+                        </p>
+                        <p style="font-size: 0.9em;"><strong>Carga:</strong> {{ m.turma.disciplina.carga_horaria }}h</p>
+                    </a>
+                {% empty %}
+                    <div class="card-dashboard" style="grid-column: 1 / -1; text-align: center; cursor: default;">
+                        <p style="color: #666; padding: 20px;">Você não possui matrículas ativas neste semestre.</p>
+                    </div>
+                {% endfor %}
+
             </div>
         </section>
     </main>

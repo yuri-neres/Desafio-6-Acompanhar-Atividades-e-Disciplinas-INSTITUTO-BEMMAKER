@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel da Coordenação | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    
+    <link rel="stylesheet" href="{% static 'coordenadores/css/style.css' %}">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo">
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="perfil-identificacao">
+                <span class="nome-coordenador">Gestão Acadêmica</span>
+                <span class="tag-perfil">Coordenação</span>
+            </div>
+            <div class="header-icons">
+                <a href="#" class="icon-link"><i class="fa-regular fa-bell"></i></a>
+                <a href="{% url 'sair' %}" class="icon-link" title="Sair do Painel"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard">
+        <section class="container-dashboard">
+            <div class="boas-vindas-dashboard">
+                <div class="texto-banner">
+                    <h2>Bem-vindo, Cord. {{ request.user.first_name }}!</h2>
+                    <p>Gerencie o corpo docente, acompanhe o desempenho dos alunos e administre as turmas e grades curriculares do projeto.</p>
+                </div>
+                <div class="icone-banner">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+            </div>
+
+            <div class="grid-dashboard">
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card verde">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    <h3>Gestão de Alunos</h3>
+                    <p>Acesse prontuários, histórico de faltas e notas consolidadas.</p>
+                </a>
+
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card cinza">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3>Corpo Docente</h3>
+                    <p>Atribua turmas, avalie planos de aula e acompanhe os professores.</p>
+                </a>
+
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card verde">
+                        <i class="fa-solid fa-sitemap"></i>
+                    </div>
+                    <h3>Turmas e Grades</h3>
+                    <p>Organize cronogramas, aloque salas e gerencie as disciplinas.</p>
+                </a>
+
+                <a href="#" class="card-dashboard">
+                    <div class="icone-card cinza">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3>Dashboard Analítico</h3>
+                    <p>Visualize indicadores de desempenho e alertas de evasão escolar.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 Instituto Bemmaker. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

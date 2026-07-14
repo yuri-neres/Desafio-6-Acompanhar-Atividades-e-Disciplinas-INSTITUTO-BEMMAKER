@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas Disciplinas | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        /* Estilos específicos para esta página */
+        .btn-voltar {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #0f2c3d;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+        .btn-voltar:hover { color: #10b981; }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo">
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="perfil-identificacao">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil">Aluno</span>
+            </div>
+            <div class="header-icons">
+                <a href="{% url 'sair' %}" class="icon-link" title="Sair do Sistema"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'alunos:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Início
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #0f2c3d; color: white;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">Detalhes das Disciplinas</h2>
+                    <p style="color: #e2e8f0;">Aqui você encontra o portal de cada matéria para acessar aulas, trabalhos e notas.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-book-open"></i>
+                </div>
+            </div>
+
+            <div class="grid-dashboard" style="margin-top: 30px;">
+                {% for m in matriculas %}
+                    <div class="card-dashboard" style="cursor: default; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div>
+                            <div class="icone-card azul">
+                                <i class="fa-solid fa-chalkboard-user"></i>
+                            </div>
+                            <h3 style="margin-bottom: 15px;">{{ m.turma.disciplina.nome }}</h3>
+                            
+                            <hr style="border: 0; border-top: 1px solid #e2e8f0; margin-bottom: 15px;">
+                            
+                            <p style="font-size: 0.95em; margin-bottom: 8px;"><i class="fa-solid fa-barcode" style="width: 20px; color: #10b981;"></i> <strong>Código:</strong> {{ m.turma.disciplina.codigo }}</p>
+                            <p style="font-size: 0.95em; margin-bottom: 8px;"><i class="fa-solid fa-users-rectangle" style="width: 20px; color: #10b981;"></i> <strong>Turma:</strong> {{ m.turma.nome }}</p>
+                            <p style="font-size: 0.95em; margin-bottom: 8px;"><i class="fa-solid fa-clock" style="width: 20px; color: #10b981;"></i> <strong>Carga:</strong> {{ m.turma.disciplina.carga_horaria }}h</p>
+                            
+                            <p style="font-size: 0.95em; margin-bottom: 20px;">
+                                <i class="fa-solid fa-chalkboard-teacher" style="width: 20px; color: #10b981;"></i> <strong>Prof:</strong> 
+                                {% if m.turma.professor %}
+                                    {{ m.turma.professor.usuario.get_full_name }}
+                                {% else %}
+                                    A definir
+                                {% endif %}
+                            </p>
+                        </div>
+                        
+                        <a href="{% url 'alunos:sala_virtual' m.turma.id %}" style="display: block; text-align: center; padding: 10px; background-color: #10b981; color: white; border-radius: 6px; text-decoration: none; font-weight: bold; transition: 0.3s;">
+                        Entrar na Sala Virtual
+                        </a>
+                    </div>
+                {% empty %}
+                    <div class="card-dashboard" style="grid-column: 1 / -1; text-align: center;">
+                        <p style="color: #666; padding: 20px; font-size: 1.1em;">Você ainda não possui disciplinas cadastradas para este semestre.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>

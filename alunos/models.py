@@ -1,17 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Aluno(models.Model):
-    PERIODO_CHOICES = [
-        ('M', 'Matutino'),
-        ('V', 'Vespertino'),
-        ('N', 'Noturno'),
-    ]
-
-    nome = models.CharField(max_length=100)
-    serie = models.CharField(max_length=20, verbose_name="Série/Ano")
-    periodo = models.CharField(max_length=1, choices=PERIODO_CHOICES, default='M', verbose_name="Período")
-    telefone = models.CharField(max_length=15, blank=True, null=True)
-    email = models.EmailField(unique=True)
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE, related_name='perfil_aluno', null=True, blank=True)
+    
+    matricula = models.CharField(max_length=20, unique=True, verbose_name="Matrícula", null=True, blank=True)
+    cpf = models.CharField(max_length=14, unique=True, verbose_name="CPF", null=True, blank=True)
+    data_nascimento = models.DateField(verbose_name="Data de Nascimento", null=True, blank=True)
+    telefone = models.CharField(max_length=20, blank=True, null=True, verbose_name="Telefone")
 
     def __str__(self):
-        return self.nome
+        return f"{self.usuario.get_full_name()} ({self.matricula})"

@@ -3,5 +3,5 @@ from .models import Coordenador
 
 @admin.register(Coordenador)
 class CoordenadorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'setor', 'email', 'telefone')
-    search_fields = ('nome', 'email')
+    list_display = ['usuario', 'registro_coordenacao', 'telefone']
+    search_fields = ['usuario__first_name', 'usuario__last_name', 'registro_coordenacao']

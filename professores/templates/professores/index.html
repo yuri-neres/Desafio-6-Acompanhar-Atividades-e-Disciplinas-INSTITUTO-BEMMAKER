@@ -11,10 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
-
-    <link rel="stylesheet" href="{% static 'professores/css/style.css' %}">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
@@ -26,60 +23,51 @@
         </div>
         <div class="header-right">
             <div class="perfil-identificacao">
-                <span class="nome-professor">Prof. Portal</span>
-                <span class="tag-perfil">Docente</span>
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil">Professor</span>
             </div>
             <div class="header-icons">
                 <a href="#" class="icon-link"><i class="fa-regular fa-bell"></i></a>
-                <a href="{% url 'home' %}" class="icon-link" title="Sair do Painel"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                <a href="{% url 'sair' %}" class="icon-link" title="Sair do Painel"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
             </div>
         </div>
     </header>
 
     <main class="content-dashboard">
         <section class="container-dashboard">
-            <div class="boas-vindas-dashboard">
+            <div class="boas-vindas-dashboard" style="background-color: #0f2c3d;">
                 <div class="texto-banner">
-                    <h1>Olá, Professor!</h1>
-                    <p>Gerencie suas disciplinas, acompanhe a frequência e organize as atividades das suas turmas.</p>
+                    <h2 style="color: white;">Olá, Prof. {{ request.user.first_name }}!</h2>
+                    <p style="color: #cbd5e1;">Gerencie suas disciplinas, publique materiais de apoio e acompanhe as atividades dos seus alunos.</p>
                 </div>
-                <div class="icone-banner">
-                    <i class="fa-solid fa-chalkboard-user"></i>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-chalkboard-teacher"></i>
                 </div>
             </div>
 
+            <h3 style="color: #0f2c3d; margin: 40px 0 15px 0;">Minhas Turmas ({{ turmas.count }})</h3>
             <div class="grid-dashboard">
-                <a href="#" class="card-dashboard">
-                    <div class="icone-card azul">
-                        <i class="fa-solid fa-users"></i>
+                
+                {% for turma in turmas %}
+                    <a href="#" class="card-dashboard" style="text-decoration: none; color: inherit;">
+                        <div class="icone-card azul">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <h3 style="margin-bottom: 10px;">{{ turma.disciplina.nome }}</h3>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;"><strong>Turma:</strong> {{ turma.nome }}</p>
+                        <p style="font-size: 0.9em; margin-bottom: 5px;"><strong>Código:</strong> {{ turma.disciplina.codigo }}</p>
+                        <p style="font-size: 0.9em;"><strong>Carga:</strong> {{ turma.disciplina.carga_horaria }}h</p>
+                        
+                        <div style="margin-top: 20px; text-align: center; padding: 10px; background-color: #10b981; color: white; border-radius: 6px; font-weight: bold; transition: 0.3s;">
+                            Gerenciar Turma
+                        </div>
+                    </a>
+                {% empty %}
+                    <div class="card-dashboard" style="grid-column: 1 / -1; text-align: center; cursor: default;">
+                        <p style="color: #666; padding: 20px;">Você ainda não foi alocado em nenhuma turma ativa no momento.</p>
                     </div>
-                    <h3>Minhas Turmas</h3>
-                    <p>Visualizar diários de classe, alunos matriculados e horários.</p>
-                </a>
+                {% endfor %}
 
-                <a href="#" class="card-dashboard">
-                    <div class="icone-card amarelo">
-                        <i class="fa-solid fa-calendar-check"></i>
-                    </div>
-                    <h3>Frequência / Chamada</h3>
-                    <p>Registrar presença e faltas das aulas de hoje.</p>
-                </a>
-
-                <a href="#" class="card-dashboard">
-                    <div class="icone-card azul">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-                    <h3>Lançar Notas</h3>
-                    <p>Gerenciar avaliações, aplicar notas e calcular médias.</p>
-                </a>
-
-                <a href="#" class="card-dashboard">
-                    <div class="icone-card amarelo">
-                        <i class="fa-solid fa-file-pen"></i>
-                    </div>
-                    <h3>Planos e Atividades</h3>
-                    <p>Cadastrar tarefas, prazos e registrar conteúdos ministrados.</p>
-                </a>
             </div>
         </section>
     </main>
