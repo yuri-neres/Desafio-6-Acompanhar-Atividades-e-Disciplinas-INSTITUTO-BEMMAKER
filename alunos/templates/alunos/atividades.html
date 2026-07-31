@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividades e Prazos | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body { display: block !important; height: auto !important; margin: 0 !important; padding: 0 !important; background-color: #f8fafc !important; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #10b981; }
+        
+        .lista-atividades { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
+        
+        .card-atividade { background: white; border-radius: 8px; padding: 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-left: 5px solid #f59e0b; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        
+        .info-atividade h3 { margin: 0 0 8px 0; color: #0f2c3d; font-size: 1.3em; }
+        .info-atividade p { margin: 0; color: #475569; font-size: 0.95em; margin-bottom: 5px; }
+        .tag-disciplina { display: inline-block; background-color: #e2e8f0; color: #334155; padding: 4px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; margin-top: 10px; }
+        .tag-valor { display: inline-block; background-color: #fef3c7; color: #b45309; padding: 4px 10px; border-radius: 4px; font-size: 0.8em; font-weight: bold; margin-top: 10px; margin-left: 5px; }
+        
+        .box-prazo { background-color: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 8px; text-align: center; min-width: 150px; }
+        .box-prazo span { display: block; color: #d97706; font-size: 0.85em; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .box-prazo strong { display: block; color: #b45309; font-size: 1.2em; }
+    </style>
+</head>
+
+<body>
+    <header class="header" style="display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 9999; width: 100%; box-sizing: border-box;">
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo">
+            </a>
+        </div>
+        <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="perfil-identificacao" style="display: flex; flex-direction: column; text-align: right;">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil">Aluno</span>
+            </div>
+            <div class="header-icons" style="display: flex; gap: 15px; font-size: 1.2em;">
+                <a href="{% url 'sair' %}" style="color: #0f2c3d;" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard" style="padding: 30px; max-width: 1200px; margin: 0 auto;">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'alunos:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Início
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #f59e0b; color: white;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">Atividades e Prazos</h2>
+                    <p style="color: #fffbeb;">Agenda de tarefas, trabalhos e avaliações pendentes.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-list-check"></i>
+                </div>
+            </div>
+
+            <div class="lista-atividades">
+                {% for atv in atividades %}
+                    <div class="card-atividade">
+                        <div class="info-atividade">
+                            <h3>{{ atv.titulo }}</h3>
+                            <p>{{ atv.descricao|truncatechars:100 }}</p>
+                            <span class="tag-disciplina">{{ atv.turma.disciplina.nome }} - {{ atv.turma.nome }}</span>
+                            <span class="tag-valor">Valor: {{ atv.nota_maxima }} pts</span>
+                        </div>
+                        
+                        <div class="box-prazo">
+                            <span><i class="fa-regular fa-clock"></i> Prazo de Entrega</span>
+                            <strong>{{ atv.data_entrega|date:"d/m/Y" }}</strong>
+                            <div style="font-size: 0.9em; color: #b45309; margin-top: 3px;">{{ atv.data_entrega|time:"H:i" }}</div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <div style="background: white; padding: 40px; text-align: center; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                        <i class="fa-solid fa-check-double" style="font-size: 3em; color: #cbd5e1; margin-bottom: 15px;"></i>
+                        <h3 style="color: #475569; margin-bottom: 5px;">Tudo em dia!</h3>
+                        <p style="color: #64748b;">Você não possui atividades ou trabalhos pendentes no momento.</p>
+                    </div>
+                {% endfor %}
+            </div>
+
+        </section>
+    </main>
+</body>
+</html>

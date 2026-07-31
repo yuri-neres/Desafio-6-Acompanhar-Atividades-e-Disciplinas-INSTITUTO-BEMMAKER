@@ -1,0 +1,181 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Usuários | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body { display: block !important; height: auto !important; margin: 0 !important; padding: 0 !important; background-color: #f8fafc !important; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #10b981; }
+        
+        .box-formulario { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid #10b981; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #0f2c3d; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .btn-salvar { background-color: #10b981; color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; transition: 0.3s; }
+        .btn-salvar:hover { background-color: #059669; }
+
+        .layout-tabelas { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+        .tabela-dados { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .tabela-dados th { background-color: #0f2c3d; color: white; padding: 15px; text-align: left; }
+        .tabela-dados td { padding: 15px; border-bottom: 1px solid #e2e8f0; color: #475569; }
+        .tabela-dados tr:last-child td { border-bottom: none; }
+    </style>
+</head>
+
+<body>
+    <header class="header" style="display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 9999; width: 100%; box-sizing: border-box;">
+        <div class="logo-container">
+            <a href="{% url 'home' %}"><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></a>
+        </div>
+        <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="perfil-identificacao" style="display: flex; flex-direction: column; text-align: right;">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil" style="background-color: #0f2c3d; color: white;">Coordenação</span>
+            </div>
+            <div class="header-icons" style="display: flex; gap: 15px; font-size: 1.2em;">
+                <a href="{% url 'sair' %}" style="color: #0f2c3d;" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard" style="padding: 30px; max-width: 1200px; margin: 0 auto;">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'coordenadores:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel Principal
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #0f2c3d; color: white; margin-bottom: 30px;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">Gestão de Usuários</h2>
+                    <p style="color: #cbd5e1;">Cadastre e gerencie as contas de acesso de alunos e professores.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-users"></i>
+                </div>
+            </div>
+
+            <div class="box-formulario">
+                <h3 style="color: #0f2c3d; margin-bottom: 25px;"><i class="fa-solid fa-user-plus" style="color: #10b981;"></i> Cadastrar Novo Usuário</h3>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="tipo">Tipo de Perfil</label>
+                            <select name="tipo" id="tipo" class="form-control" required>
+                                <option value="aluno">Aluno</option>
+                                <option value="professor">Professor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Nome</label>
+                            <input type="text" name="first_name" id="first_name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Sobrenome</label>
+                            <input type="text" name="last_name" id="last_name" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="username">Nome de Usuário (Login)</label>
+                            <input type="text" name="username" id="username" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Senha Temporária</label>
+                            <input type="password" name="password" id="password" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" name="email" id="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label id="label_identificacao" for="identificacao">Nº Matrícula</label>
+                            <input type="text" name="identificacao" id="identificacao" class="form-control" placeholder="RA ou Titulação" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-salvar">Criar Conta</button>
+                </form>
+            </div>
+
+            <div class="layout-tabelas">
+                <div>
+                    <h3 style="color: #0f2c3d; margin-bottom: 20px;"><i class="fa-solid fa-user-graduate" style="color: #3b82f6;"></i> Alunos Matriculados</h3>
+                    <table class="tabela-dados">
+                        <thead>
+                            <tr>
+                                <th>Matrícula</th>
+                                <th>Nome Completo</th>
+                                <th>Usuário</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in alunos %}
+                                <tr>
+                                    <td>{{ a.matricula_curso }}</td>
+                                    <td style="font-weight: 600;">{{ a.usuario.get_full_name|default:"Sem Nome" }}</td>
+                                    <td>{{ a.usuario.username }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr><td colspan="3" style="text-align: center;">Nenhum aluno cadastrado.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div>
+                    <h3 style="color: #0f2c3d; margin-bottom: 20px;"><i class="fa-solid fa-chalkboard-user" style="color: #f59e0b;"></i> Corpo Docente</h3>
+                    <table class="tabela-dados">
+                        <thead>
+                            <tr>
+                                <th>Nome Completo</th>
+                                <th>Titulação</th>
+                                <th>Usuário</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in professores %}
+                                <tr>
+                                    <td style="font-weight: 600;">{{ p.usuario.get_full_name|default:"Sem Nome" }}</td>
+                                    <td>{{ p.titulacao|default:"-" }}</td>
+                                    <td>{{ p.usuario.username }}</td>
+                                </tr>
+                            {% empty %}
+                                <tr><td colspan="3" style="text-align: center;">Nenhum professor cadastrado.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        document.getElementById('tipo').addEventListener('change', function() {
+            const label = document.getElementById('label_identificacao');
+            if (this.value === 'aluno') {
+                label.textContent = 'Nº Matrícula';
+            } else {
+                label.textContent = 'Titulação (Ex: Mestre, Doutor)';
+            }
+        });
+    </script>
+</body>
+</html>

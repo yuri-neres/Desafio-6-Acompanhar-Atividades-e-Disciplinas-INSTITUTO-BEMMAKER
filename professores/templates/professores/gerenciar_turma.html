@@ -1,0 +1,330 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Turma | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body { display: block !important; height: auto !important; margin: 0 !important; padding: 0 !important; background-color: #f8fafc !important; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #10b981; }
+        
+        .layout-gerenciamento { display: grid; grid-template-columns: 250px 1fr; gap: 30px; }
+        
+        .menu-lateral { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .menu-lateral a { display: block; padding: 12px 15px; margin-bottom: 10px; color: #333; text-decoration: none; border-radius: 6px; font-weight: 500; transition: 0.2s; cursor: pointer; }
+        .menu-lateral a:hover, .menu-lateral a.ativo { background-color: #e2e8f0; color: #0f2c3d; border-left: 4px solid #10b981; }
+        
+        .conteudo-principal { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        .box-formulario { background: #f8fafc; padding: 20px; border-radius: 8px; margin-bottom: 30px; border: 1px solid #e2e8f0; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 6px; color: #0f2c3d; font-size: 0.9em; }
+        .form-control { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        textarea.form-control { resize: vertical; min-height: 100px; }
+        .btn-salvar { background-color: #10b981; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.95em; transition: 0.3s; }
+        .btn-salvar:hover { background-color: #059669; }
+
+        .lista-itens { display: grid; gap: 15px; }
+        .item-card { background: white; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; }
+
+        .tabela-alunos { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .tabela-alunos th { background-color: #0f2c3d; color: white; padding: 10px; text-align: left; font-size: 0.9em; }
+        .tabela-alunos td { padding: 10px; border-bottom: 1px solid #e2e8f0; }
+    </style>
+</head>
+
+<body>
+    <header class="header" style="display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 9999; width: 100%; box-sizing: border-box;">
+        <div class="logo-container">
+            <a href="{% url 'home' %}"><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></a>
+        </div>
+        <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="perfil-identificacao" style="display: flex; flex-direction: column; text-align: right;">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil">Professor</span>
+            </div>
+            <div class="header-icons" style="display: flex; gap: 15px; font-size: 1.2em;">
+                <a href="{% url 'sair' %}" style="color: #0f2c3d;" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard" style="padding: 30px; max-width: 1200px; margin: 0 auto;">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'professores:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar para Minhas Turmas
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #0f2c3d; color: white; margin-bottom: 30px;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">{{ turma.disciplina.nome }}</h2>
+                    <p style="color: #cbd5e1;">Turma: {{ turma.nome }} | Painel de controle da disciplina.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-laptop-code"></i>
+                </div>
+            </div>
+
+            <div class="layout-gerenciamento">
+                
+                <nav class="menu-lateral">
+                    <h4 style="margin-bottom: 15px; color: #0f2c3d; font-size: 0.85em; text-transform: uppercase;">Gestão da Turma</h4>
+                    <a onclick="abrirAba('aba-aulas', this)" class="menu-item ativo"><i class="fa-solid fa-chalkboard" style="width: 25px;"></i> Conteúdo de Aula</a>
+                    <a onclick="abrirAba('aba-atividades', this)" class="menu-item"><i class="fa-solid fa-tasks" style="width: 25px;"></i> Atividades e Trabalhos</a>
+                    <a onclick="abrirAba('aba-notas', this)" class="menu-item"><i class="fa-solid fa-award" style="width: 25px;"></i> Avaliações e Notas</a>
+                    <a onclick="abrirAba('aba-frequencia', this)" class="menu-item"><i class="fa-regular fa-calendar-check" style="width: 25px;"></i> Registro de Frequência</a>
+                </nav>
+
+                <div class="conteudo-principal">
+                    
+                    <div id="aba-aulas" class="sessao-aba">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Conteúdo de Aula</h3>
+                        
+                        <div class="box-formulario">
+                            <h4 style="color: #0f2c3d; margin-bottom: 15px;"><i class="fa-solid fa-plus" style="color: #10b981;"></i> Registrar Nova Aula</h4>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="acao" value="criar_aula">
+                                
+                                <div class="form-group">
+                                    <label for="data">Data da Aula</label>
+                                    <input type="date" name="data" id="data" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="conteudo_ministrado">Conteúdo Ministrado</label>
+                                    <textarea name="conteudo_ministrado" id="conteudo_ministrado" class="form-control" placeholder="Tópicos apresentados na aula..." required></textarea>
+                                </div>
+                                <button type="submit" class="btn-salvar">Salvar Aula</button>
+                            </form>
+                        </div>
+
+                        <h4 style="color: #0f2c3d; margin-bottom: 15px;">Aulas Lançadas</h4>
+                        <div class="lista-itens">
+                            {% for aula in aulas %}
+                                <div class="item-card">
+                                    <strong style="color: #0f2c3d;">Aula de {{ aula.data|date:"d/m/Y" }}</strong>
+                                    <p style="margin: 10px 0 0 0; color: #475569; font-size: 0.95em;">{{ aula.conteudo_ministrado }}</p>
+                                </div>
+                            {% empty %}
+                                <p style="color: #64748b;">Nenhuma aula registrada ainda.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div id="aba-atividades" class="sessao-aba" style="display: none;">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Atividades e Prazos</h3>
+                        
+                        <div class="box-formulario" style="border-top: 4px solid #f59e0b;">
+                            <h4 style="color: #0f2c3d; margin-bottom: 15px;"><i class="fa-solid fa-plus" style="color: #f59e0b;"></i> Nova Atividade / Trabalho</h4>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="acao" value="criar_atividade">
+                                
+                                <div class="form-group">
+                                    <label for="titulo">Título da Atividade</label>
+                                    <input type="text" name="titulo" id="titulo" class="form-control" placeholder="Ex: Trabalho Prático 1 - Modelo ER" required>
+                                </div>
+                                
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                    <div class="form-group">
+                                        <label for="data_entrega">Prazo Limite de Entrega</label>
+                                        <input type="datetime-local" name="data_entrega" id="data_entrega" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nota_maxima">Nota Máxima</label>
+                                        <input type="number" step="0.1" name="nota_maxima" id="nota_maxima" class="form-control" value="10.0" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="descricao">Descrição / Instruções</label>
+                                    <textarea name="descricao" id="descricao" class="form-control" placeholder="Detalhamento do que deve ser feito e entregue..." required></textarea>
+                                </div>
+                                
+                                <button type="submit" class="btn-salvar" style="background-color: #f59e0b;">Publicar Atividade</button>
+                            </form>
+                        </div>
+
+                        <h4 style="color: #0f2c3d; margin-bottom: 15px;">Atividades Cadastradas</h4>
+                        <div class="lista-itens">
+                            {% for atv in atividades %}
+                                <div class="item-card" style="border-left: 4px solid #f59e0b;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                        <h4 style="margin: 0; color: #0f2c3d;">{{ atv.titulo }}</h4>
+                                        <span style="background-color: #fef3c7; color: #b45309; padding: 4px 10px; border-radius: 4px; font-weight: bold; font-size: 0.85em;">
+                                            Valendo: {{ atv.nota_maxima }} pts
+                                        </span>
+                                    </div>
+                                    <p style="margin: 0 0 10px 0; color: #475569; font-size: 0.95em;">{{ atv.descricao }}</p>
+                                    <div style="font-size: 0.85em; color: #d97706; font-weight: bold;">
+                                        <i class="fa-regular fa-clock"></i> Entrega até: {{ atv.data_entrega|date:"d/m/Y H:i" }}
+                                    </div>
+                                </div>
+                            {% empty %}
+                                <p style="color: #64748b;">Nenhuma atividade cadastrada ainda.</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div id="aba-notas" class="sessao-aba" style="display: none;">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Avaliações e Lançamento de Notas</h3>
+                        
+                        <div class="box-formulario" style="border-top: 4px solid #3b82f6;">
+                            <h4 style="color: #0f2c3d; margin-bottom: 15px;"><i class="fa-solid fa-plus" style="color: #3b82f6;"></i> Cadastrar Nova Avaliação</h4>
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="acao" value="criar_avaliacao">
+                                
+                                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
+                                    <div class="form-group">
+                                        <label for="nome_eval">Nome da Avaliação</label>
+                                        <input type="text" name="nome" id="nome_eval" class="form-control" placeholder="Ex: Prova 1, Seminário, P2" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="peso_eval">Peso (Média)</label>
+                                        <input type="number" step="0.1" name="peso" id="peso_eval" class="form-control" value="1.0" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nota_max">Nota Máxima</label>
+                                        <input type="number" step="0.1" name="nota_maxima" id="nota_max" class="form-control" value="10.0" required>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" class="btn-salvar" style="background-color: #3b82f6;">Criar Avaliação</button>
+                            </form>
+                        </div>
+
+                        {% if avaliacoes %}
+                            <div class="box-formulario" style="background-color: #ffffff; border: 1px solid #cbd5e1;">
+                                <h4 style="color: #0f2c3d; margin-bottom: 15px;"><i class="fa-solid fa-pen-to-square" style="color: #10b981;"></i> Lançar / Atualizar Notas</h4>
+                                
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="acao" value="salvar_notas">
+                                    
+                                    <div class="form-group">
+                                        <label for="avaliacao_id">Selecione a Avaliação:</label>
+                                        <select name="avaliacao_id" id="avaliacao_id" class="form-control" required>
+                                            {% for av in avaliacoes %}
+                                                <option value="{{ av.id }}">{{ av.nome }} (Peso: {{ av.peso }} | Máx: {{ av.nota_maxima }})</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    {% if matriculas %}
+                                        <table class="tabela-alunos">
+                                            <thead>
+                                                <tr>
+                                                    <th>Aluno</th>
+                                                    <th style="width: 150px;">Nota Obtida</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for m in matriculas %}
+                                                    <tr>
+                                                        <td>{{ m.aluno.usuario.get_full_name|default:m.aluno.usuario.username }}</td>
+                                                        <td>
+                                                            <input type="number" step="0.1" name="nota_aluno_{{ m.aluno.id }}" class="form-control" placeholder="0.0 a 10.0" min="0" max="10">
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        
+                                        <button type="submit" class="btn-salvar" style="margin-top: 20px;">Salvar Notas Lançadas</button>
+                                    {% else %}
+                                        <p style="color: #64748b; margin-top: 10px;">Nenhum aluno matriculado nesta turma para lançar notas.</p>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
+                    <div id="aba-frequencia" class="sessao-aba" style="display: none;">
+                        <h3 style="color: #0f2c3d; margin-bottom: 20px;">Registro de Frequência (Chamada)</h3>
+                        
+                        {% if aulas %}
+                            <div class="box-formulario" style="border-top: 4px solid #10b981;">
+                                <h4 style="color: #0f2c3d; margin-bottom: 15px;"><i class="fa-solid fa-clipboard-user" style="color: #10b981;"></i> Lançar Presenças por Aula</h4>
+                                
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="acao" value="salvar_frequencia">
+                                    
+                                    <div class="form-group">
+                                        <label for="aula_id">Selecione a Aula Ministrada:</label>
+                                        <select name="aula_id" id="aula_id" class="form-control" required>
+                                            {% for aula in aulas %}
+                                                <option value="{{ aula.id }}">Aula de {{ aula.data|date:"d/m/Y" }} - {{ aula.conteudo_ministrado|truncatechars:50 }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    {% if matriculas %}
+                                        <table class="tabela-alunos">
+                                            <thead>
+                                                <tr>
+                                                    <th>Aluno</th>
+                                                    <th style="width: 150px; text-align: center;">Presente?</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for m in matriculas %}
+                                                    <tr>
+                                                        <td>{{ m.aluno.usuario.get_full_name|default:m.aluno.usuario.username }}</td>
+                                                        <td style="text-align: center;">
+                                                            <input type="checkbox" name="presenca_aluno_{{ m.aluno.id }}" value="true" checked style="width: 20px; height: 20px; cursor: pointer;">
+                                                        </td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                        
+                                        <button type="submit" class="btn-salvar" style="margin-top: 20px;">Salvar Frequência</button>
+                                    {% else %}
+                                        <p style="color: #64748b; margin-top: 10px;">Nenhum aluno matriculado nesta turma para registrar frequência.</p>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        {% else %}
+                            <div style="text-align: center; padding: 30px; background: white; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                                <p style="color: #64748b;">Registre pelo menos uma aula na primeira aba antes de fazer a chamada.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        function abrirAba(idAba, elementoClicado) {
+            var abas = document.getElementsByClassName("sessao-aba");
+            for (var i = 0; i < abas.length; i++) {
+                abas[i].style.display = "none";
+            }
+            var menus = document.getElementsByClassName("menu-item");
+            for (var i = 0; i < menus.length; i++) {
+                menus[i].classList.remove("ativo");
+            }
+            document.getElementById(idAba).style.display = "block";
+            elementoClicado.classList.add("ativo");
+        }
+    </script>
+</body>
+</html>

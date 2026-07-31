@@ -49,7 +49,7 @@
             <div class="grid-dashboard">
                 
                 {% for turma in turmas %}
-                    <a href="#" class="card-dashboard" style="text-decoration: none; color: inherit;">
+                    <a href="{% url 'professores:gerenciar_turma' turma.id %}" class="card-dashboard" style="text-decoration: none; color: inherit;">
                         <div class="icone-card azul">
                             <i class="fa-solid fa-chalkboard-user"></i>
                         </div>

@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Turma | Instituto Bemmaker</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body { display: block !important; height: auto !important; background-color: #f8fafc !important; }
+        .box-formulario { background: white; padding: 30px; border-radius: 8px; border-top: 4px solid #8b5cf6; max-width: 800px; margin: 30px auto; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #0f2c3d; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; }
+        .btn-salvar { background-color: #8b5cf6; color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <main style="padding: 30px;">
+        <div class="box-formulario">
+            <a href="{% url 'coordenadores:turmas' %}" style="color: #0f2c3d; text-decoration: none; font-weight: bold;"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+            <h3 style="color: #0f2c3d; margin: 20px 0;">Editar Turma / Alocação: {{ turma.nome }}</h3>
+            
+            <form method="post">
+                {% csrf_token %}
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Nome da Turma</label>
+                        <input type="text" name="nome" value="{{ turma.nome }}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Disciplina</label>
+                        <select name="disciplina_id" class="form-control" required>
+                            {% for d in disciplinas %}
+                                <option value="{{ d.id }}" {% if d.id == turma.disciplina.id %}selected{% endif %}>{{ d.nome }} ({{ d.codigo }})</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px;">
+                    <div class="form-group">
+                        <label>Professor Responsável</label>
+                        <select name="professor_id" class="form-control">
+                            <option value="">-- A Definir --</option>
+                            {% for p in professores %}
+                                <option value="{{ p.id }}" {% if turma.professor and p.id == turma.professor.id %}selected{% endif %}>{{ p.usuario.get_full_name|default:p.usuario.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Ano</label>
+                        <input type="number" name="ano" value="{{ turma.ano }}" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Semestre</label>
+                        <select name="semestre" class="form-control" required>
+                            <option value="1" {% if turma.semestre == 1 %}selected{% endif %}>1º Semestre</option>
+                            <option value="2" {% if turma.semestre == 2 %}selected{% endif %}>2º Semestre</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-salvar">Atualizar Turma</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

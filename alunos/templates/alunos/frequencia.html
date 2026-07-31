@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Frequência | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #10b981; }
+        
+        .tabela-frequencia { width: 100%; border-collapse: collapse; margin-bottom: 30px; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
+        .tabela-frequencia th { background-color: #0f2c3d; color: white; padding: 15px; text-align: left; }
+        .tabela-frequencia td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .tabela-frequencia tr:last-child td { border-bottom: none; }
+        
+        .titulo-materia { color: #0f2c3d; margin: 30px 0 10px 0; border-left: 4px solid #3b82f6; padding-left: 10px; }
+        
+        .status-presente { background-color: #d1fae5; color: #059669; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85em; display: inline-block; }
+        .status-falta { background-color: #fee2e2; color: #dc2626; padding: 6px 12px; border-radius: 20px; font-weight: 600; font-size: 0.85em; display: inline-block; }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo">
+            </a>
+        </div>
+        <div class="header-right">
+            <div class="perfil-identificacao">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil">Aluno</span>
+            </div>
+            <div class="header-icons">
+                <a href="{% url 'sair' %}" class="icon-link" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'alunos:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Início
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #3b82f6; color: white;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">Minha Frequência</h2>
+                    <p style="color: #eff6ff;">Consulte o seu histórico de presenças e faltas por disciplina.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-regular fa-calendar-check"></i>
+                </div>
+            </div>
+
+            {% if presencas %}
+                {% regroup presencas by aula.turma.disciplina.nome as frequencia_por_disciplina %}
+                
+                {% for disciplina in frequencia_por_disciplina %}
+                    <h3 class="titulo-materia">{{ disciplina.grouper }}</h3>
+                    
+                    <table class="tabela-frequencia">
+                        <thead>
+                            <tr>
+                                <th>Data da Aula</th>
+                                <th>Conteúdo / Título</th>
+                                <th>Situação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for p in disciplina.list %}
+                            <tr>
+                                <td style="width: 15%;">{{ p.aula.data|date:"d/m/Y" }}</td>
+                                <td>{{ p.aula.titulo|default:"Registro de Aula" }}</td>
+                                <td style="width: 15%;">
+                                    {% if p.presente %}
+                                        <span class="status-presente"><i class="fa-solid fa-check"></i> Presente</span>
+                                    {% else %}
+                                        <span class="status-falta"><i class="fa-solid fa-xmark"></i> Falta</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+                
+            {% else %}
+                <div style="background: white; padding: 30px; text-align: center; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <i class="fa-regular fa-calendar-xmark" style="font-size: 3em; color: #cbd5e1; margin-bottom: 15px;"></i>
+                    <p style="color: #64748b; font-size: 1.1em;">Nenhum registro de frequência foi lançado para você até o momento.</p>
+                </div>
+            {% endif %}
+
+        </section>
+    </main>
+</body>
+</html>

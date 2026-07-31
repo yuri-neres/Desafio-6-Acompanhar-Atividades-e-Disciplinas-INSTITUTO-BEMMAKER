@@ -1,0 +1,168 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Turmas | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body { display: block !important; height: auto !important; margin: 0 !important; padding: 0 !important; background-color: #f8fafc !important; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #8b5cf6; }
+        
+        .box-formulario { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); margin-bottom: 40px; border-top: 4px solid #8b5cf6; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #0f2c3d; }
+        .form-control { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .btn-salvar { background-color: #8b5cf6; color: white; border: none; padding: 12px 25px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; transition: 0.3s; }
+        .btn-salvar:hover { background-color: #7c3aed; }
+
+        .tabela-dados { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .tabela-dados th { background-color: #0f2c3d; color: white; padding: 15px; text-align: left; }
+        .tabela-dados td { padding: 15px; border-bottom: 1px solid #e2e8f0; color: #475569; }
+        .tabela-dados tr:last-child td { border-bottom: none; }
+        .tag-semestre { background-color: #f3e8ff; color: #6b21a8; padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; }
+    </style>
+</head>
+
+<body>
+    <header class="header" style="display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 9999; width: 100%; box-sizing: border-box;">
+        <div class="logo-container">
+            <a href="{% url 'home' %}"><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></a>
+        </div>
+        <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="perfil-identificacao" style="display: flex; flex-direction: column; text-align: right;">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil" style="background-color: #0f2c3d; color: white;">Coordenação</span>
+            </div>
+            <div class="header-icons" style="display: flex; gap: 15px; font-size: 1.2em;">
+                <a href="{% url 'sair' %}" style="color: #0f2c3d;" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard" style="padding: 30px; max-width: 1200px; margin: 0 auto;">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'coordenadores:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Painel Principal
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #0f2c3d; color: white; margin-bottom: 30px;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">Gestão de Turmas e Alocações</h2>
+                    <p style="color: #cbd5e1;">Abertura de Turmas: Associe disciplinas a docentes e defina os semestres letivos.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+            </div>
+
+            <div class="box-formulario">
+                <h3 style="color: #0f2c3d; margin-bottom: 25px;"><i class="fa-solid fa-plus" style="color: #8b5cf6;"></i> Criar Nova Turma</h3>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div style="display: grid; grid-template-columns: 2fr 2fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="nome">Identificação da Turma</label>
+                            <input type="text" name="nome" id="nome" class="form-control" placeholder="Ex: Turma A - Matutino" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="disciplina_id">Disciplina</label>
+                            <select name="disciplina_id" id="disciplina_id" class="form-control" required>
+                                <option value="">-- Selecione uma Disciplina --</option>
+                                {% for d in disciplinas %}
+                                    <option value="{{ d.id }}">{{ d.nome }} ({{ d.codigo }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 20px;">
+                        <div class="form-group">
+                            <label for="professor_id">Professor Responsável</label>
+                            <select name="professor_id" id="professor_id" class="form-control">
+                                <option value="">-- A Definir --</option>
+                                {% for p in professores %}
+                                    <option value="{{ p.id }}">{{ p.usuario.get_full_name|default:p.usuario.username }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ano">Ano Letivo</label>
+                            <input type="number" name="ano" id="ano" class="form-control" value="2026" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="semestre">Semestre</label>
+                            <select name="semestre" id="semestre" class="form-control" required>
+                                <option value="1">1º Semestre</option>
+                                <option value="2">2º Semestre</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn-salvar">Cadastrar Turma</button>
+                </form>
+            </div>
+
+            <h3 style="color: #0f2c3d; margin-bottom: 20px;">Turmas Cadastradas ({{ turmas|length }})</h3>
+            
+            {% if turmas %}
+                <table class="tabela-dados">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Turma</th>
+                            <th style="width: 25%;">Disciplina</th>
+                            <th style="width: 25%;">Professor</th>
+                            <th style="width: 15%; text-align: center;">Período Letivo</th>
+                            <th style="width: 15%; text-align: center;">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in turmas %}
+                            <tr>
+                                <td style="font-weight: 600; color: #0f2c3d;">{{ t.nome }}</td>
+                                <td>{{ t.disciplina.nome }} <small style="color: #64748b;">({{ t.disciplina.codigo }})</small></td>
+                                <td>
+                                    {% if t.professor %}
+                                        {{ t.professor.usuario.get_full_name|default:t.professor.usuario.username }}
+                                    {% else %}
+                                        <span style="color: #94a3b8; font-style: italic;">A definir</span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: center;">
+                                    <span class="tag-semestre">{{ t.ano }}.{{ t.semestre }}</span>
+                                </td>
+                                <td style="text-align: center;">
+                                <a href="{% url 'coordenadores:editar_turma' t.id %}" style="color: #3b82f6; margin-right: 10px;" title="Editar"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{% url 'coordenadores:excluir_turma' t.id %}" style="color: #ef4444;" title="Excluir" onclick="return confirm('Tem certeza que deseja excluir esta turma?');"><i class="fa-solid fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div style="text-align: center; padding: 40px; background: white; border-radius: 8px; border: 1px dashed #cbd5e1;">
+                    <i class="fa-solid fa-users-rectangle" style="font-size: 3em; color: #cbd5e1; margin-bottom: 15px;"></i>
+                    <p style="color: #64748b; font-size: 1.1em;">Nenhuma turma foi aberta no sistema ainda.</p>
+                </div>
+            {% endif %}
+
+        </section>
+    </main>
+</body>
+</html>

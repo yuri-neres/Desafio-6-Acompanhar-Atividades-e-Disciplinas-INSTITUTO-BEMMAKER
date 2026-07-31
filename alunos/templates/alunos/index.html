@@ -13,6 +13,56 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
     <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* 1. Resetando o body caso o CSS do login esteja afetando ele */
+        body {
+            display: block !important; 
+            height: auto !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: #f8fafc !important;
+        }
+
+        /* 2. Travando o cabeçalho no topo da tela */
+        .header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+            background-color: #ffffff !important;
+            padding: 15px 30px !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+            position: sticky !important; /* Trava no topo ao rolar a página */
+            top: 0 !important;
+            z-index: 9999 !important; /* Força ficar na frente de tudo */
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        
+        .header-right {
+            display: flex !important;
+            align-items: center !important;
+            gap: 20px !important;
+        }
+
+        .perfil-identificacao {
+            display: flex !important;
+            flex-direction: column !important;
+            text-align: right !important;
+        }
+
+        .header-icons {
+            display: flex !important;
+            gap: 15px !important;
+            font-size: 1.2em !important;
+        }
+
+        .content-dashboard {
+            padding: 30px !important;
+            max-width: 1200px !important;
+            margin: 0 auto !important; /* Centraliza o conteúdo */
+        }
+    </style>
 </head>
 
 <body>
@@ -56,7 +106,7 @@
                     <p>Acesse o material de aula, cronograma e professores de cada matéria.</p>
                 </a>
 
-                <a href="#" class="card-dashboard">
+                <a href="{% url 'alunos:boletim' %}" class="card-dashboard">
                     <div class="icone-card amarelo">
                         <i class="fa-solid fa-award"></i>
                     </div>
@@ -64,7 +114,7 @@
                     <p>Confira os resultados das suas avaliações e a sua média final.</p>
                 </a>
 
-                <a href="#" class="card-dashboard">
+                <a href="{% url 'alunos:frequencia' %}" class="card-dashboard">
                     <div class="icone-card azul">
                         <i class="fa-regular fa-calendar-check"></i>
                     </div>
@@ -72,7 +122,7 @@
                     <p>Acompanhe seu percentual de presenças e histórico de faltas.</p>
                 </a>
 
-                <a href="#" class="card-dashboard">
+                <a href="{% url 'alunos:atividades' %}" class="card-dashboard">
                     <div class="icone-card amarelo">
                         <i class="fa-solid fa-list-check"></i>
                     </div>

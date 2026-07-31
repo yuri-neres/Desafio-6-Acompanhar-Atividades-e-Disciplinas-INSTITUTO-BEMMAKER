@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boletim e Notas | Instituto Bemmaker</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+    <link rel="stylesheet" href="{% static 'alunos/css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body { display: block !important; height: auto !important; margin: 0 !important; padding: 0 !important; background-color: #f8fafc !important; }
+        .btn-voltar { display: inline-flex; align-items: center; gap: 8px; color: #0f2c3d; text-decoration: none; font-weight: 600; margin-bottom: 20px; transition: color 0.3s; }
+        .btn-voltar:hover { color: #10b981; }
+        
+        .tabela-boletim { width: 100%; border-collapse: collapse; margin-bottom: 30px; background-color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; overflow: hidden; }
+        .tabela-boletim th { background-color: #0f2c3d; color: white; padding: 15px; text-align: left; }
+        .tabela-boletim td { padding: 15px; border-bottom: 1px solid #e2e8f0; }
+        .tabela-boletim tr:last-child td { border-bottom: none; }
+        
+        .nota-destaque { font-weight: bold; color: #10b981; font-size: 1.1em; }
+        .titulo-materia { color: #0f2c3d; margin: 30px 0 10px 0; border-left: 4px solid #f59e0b; padding-left: 10px; }
+    </style>
+</head>
+
+<body>
+    <header class="header" style="display: flex; justify-content: space-between; align-items: center; background-color: #ffffff; padding: 15px 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 9999; width: 100%; box-sizing: border-box;">
+        <div class="logo-container">
+            <a href="{% url 'home' %}"><img src="{% static 'img/logo-instituto-bemmaker.png' %}" alt="Logo Bemmaker" class="logo"></a>
+        </div>
+        <div class="header-right" style="display: flex; align-items: center; gap: 20px;">
+            <div class="perfil-identificacao" style="display: flex; flex-direction: column; text-align: right;">
+                <span class="nome-aluno">{{ request.user.get_full_name|default:request.user.username }}</span>
+                <span class="tag-perfil">Aluno</span>
+            </div>
+            <div class="header-icons" style="display: flex; gap: 15px; font-size: 1.2em;">
+                <a href="{% url 'sair' %}" style="color: #0f2c3d;" title="Sair"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main class="content-dashboard" style="padding: 30px; max-width: 1200px; margin: 0 auto;">
+        <section class="container-dashboard">
+            
+            <a href="{% url 'alunos:index' %}" class="btn-voltar">
+                <i class="fa-solid fa-arrow-left"></i> Voltar ao Início
+            </a>
+
+            <div class="boas-vindas-dashboard" style="background-color: #f59e0b; color: white;">
+                <div class="texto-banner">
+                    <h2 style="color: white;">Boletim e Notas</h2>
+                    <p style="color: #fffbeb;">Acompanhe o seu desempenho acadêmico e histórico de avaliações.</p>
+                </div>
+                <div class="icone-banner" style="color: rgba(255, 255, 255, 0.2);">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+            </div>
+
+            {% if notas %}
+                {% regroup notas by avaliacao.turma.disciplina.nome as notas_por_disciplina %}
+                
+                {% for disciplina in notas_por_disciplina %}
+                    <h3 class="titulo-materia">{{ disciplina.grouper }}</h3>
+                    
+                    <table class="tabela-boletim">
+                        <thead>
+                            <tr>
+                                <th>Avaliação</th>
+                                <th>Turma</th>
+                                <th>Peso</th>
+                                <th>Nota Obtida</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for nota in disciplina.list %}
+                            <tr>
+                                <td>{{ nota.avaliacao.nome }} (Máx: {{ nota.avaliacao.nota_maxima }})</td>
+                                <td>{{ nota.avaliacao.turma.nome }}</td>
+                                <td>{{ nota.avaliacao.peso }}</td>
+                                <td class="nota-destaque">{{ nota.valor_nota }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endfor %}
+                
+            {% else %}
+                <div style="background: white; padding: 30px; text-align: center; border-radius: 8px; margin-top: 30px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                    <i class="fa-regular fa-folder-open" style="font-size: 3em; color: #cbd5e1; margin-bottom: 15px;"></i>
+                    <p style="color: #64748b; font-size: 1.1em;">Nenhuma nota foi registrada no seu boletim até o momento.</p>
+                </div>
+            {% endif %}
+
+        </section>
+    </main>
+</body>
+</html>
